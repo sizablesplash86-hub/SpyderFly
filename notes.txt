@@ -1,3 +1,6 @@
+I should use this to make a built in nextcloud LEMP stacks web server on port 2016...
+
+
 gcc web2.c -o web -lssl -lcrypto
 
 
@@ -15,3 +18,25 @@ git push -u origin main
 git remote add origin https://github.com/sizablesplash86-hub/SpyderFly.git
 git branch -M main
 git push -u origin main
+
+
+# update postinst script
+nano spyderfly-pkg/DEBIAN/postinst
+chmod 755 spyderfly-pkg/DEBIAN/postinst
+
+rm /var/www/repos/spyderfly/releases/latest/latest
+gcc -O2 install.c -o /var/www/repos/spyderfly/releases/latest/latest
+chmod +x /var/www/repos/spyderfly/releases/latest/latest
+
+# change version
+cp /var/www/repos/spyderfly/releases/latest/latest /var/www/repos/spyderfly/releases/beta_1.0/beta_1.0
+chmod +x /var/www/repos/spyderfly/releases/beta_1.0/beta_1.0
+
+# change version
+nano spyderfly-pkg/DEBIAN/control
+
+# build package (using the matching folder name)
+dpkg-deb --build spyderfly-pkg spyderfly_beta_1.0_amd64.deb
+mv spyderfly_beta_1.0_amd64.deb /var/www/repos/spyderfly/releases/beta_1.0/spyderfly_beta_1.0_amd64.deb
+rm /var/www/repos/spyderfly/releases/latest/latest.deb
+cp /var/www/repos/spyderfly/releases/beta_1.0/spyderfly_beta_1.0_amd64.deb /var/www/repos/spyderfly/releases/latest/latest.deb

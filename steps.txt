@@ -1,0 +1,14 @@
+checklist:
+
+bare needs:
+* http port number
+* directory https
+* proxy https
+* certbot
+
+other features:
+* auto config
+* background process
+* updates
+* test & reload
+* curl install script

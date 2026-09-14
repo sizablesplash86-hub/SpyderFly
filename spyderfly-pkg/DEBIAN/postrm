@@ -1,0 +1,12 @@
+#!/bin/sh
+set -e
+
+# Remove the binary downloaded by postinst
+if [ "$1" = "remove" ] || [ "$1" = "purge" ]; then
+    rm -f /usr/bin/spyderfly
+fi
+
+# Remove configuration directories only on purge
+if [ "$1" = "purge" ]; then
+    rm -rf /etc/spyderfly
+fi
