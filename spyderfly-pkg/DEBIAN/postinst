@@ -8,8 +8,9 @@ CONF_DIR="/etc/spyderfly/config"
 IND_HTM="https://repo.sizablesplash.com/spyderfly/shell-script/working.html"
   # change per version
 CURR_VER="https://repo.sizablesplash.com/spyderfly/releases/beta_1.0/beta_1.0"
-  # change per here too
 OUTPUT="/usr/bin/spyderfly"
+DEF_CONF="/etc/spyderfly/sites/default.conf"
+
 
 echo "Welcome to the SpyderFly web server beta 1.0! Thank you for choosing SpyderFly"
 
@@ -28,4 +29,17 @@ if [ ! -f "$INDEX_DIR/index.html" ]; then
   curl -sSL "$IND_HTM" -o "$INDEX_DIR/index.html"
 fi
 
+if [ ! -f "$DEF_CONF" ]; then
+  mkdir -p "$(dirname "$DEF_CONF")"
+  cat << 'EOF' > "$DEF_CONF"
+    # Welcome to the SpyderFly web server! Read docs at https://spyderfly.sizablesplash.com
+    # This is a work in progress and some things might not work
+    # DO NOT DELETE THIS FILE!!!!!!!
+
+    # SpyderFly Server Configuration
+    listen 8046;
+    server_name localhost;
+    root /etc/spyderfly/index/;
+  EOF
+fi
 echo "SpyderFly installed! Thank you for choosing SpyderFly"

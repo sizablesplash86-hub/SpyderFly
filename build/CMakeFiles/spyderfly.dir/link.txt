@@ -1,0 +1,1 @@
+/usr/bin/cc -Wl,--dependency-file=CMakeFiles/spyderfly.dir/link.d CMakeFiles/spyderfly.dir/install.c.o -o spyderfly

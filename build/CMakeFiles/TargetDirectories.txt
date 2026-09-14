@@ -1,0 +1,3 @@
+/mnt/code-projects/packages/web-server/build/CMakeFiles/spyderfly.dir
+/mnt/code-projects/packages/web-server/build/CMakeFiles/edit_cache.dir
+/mnt/code-projects/packages/web-server/build/CMakeFiles/rebuild_cache.dir
