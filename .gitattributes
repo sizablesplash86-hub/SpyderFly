@@ -1,2 +1,2 @@
-nginx-code/** linguist-vendored
-main-updates/** linguist-vendored
+nginx-code/** linguist-detectable=false
+main-updates/** linguist-detectable=false
