@@ -1,1 +1,0 @@
-I thought about putting my NGINX install code in here for reference but it would've caused issues with finding source code so just look in /etc/nginx
