@@ -1,5 +1,8 @@
 I should use this to make a built in nextcloud LEMP stacks web server on port 2016...
 
+openssl I think is written in C while certbot is python.
+openSSH is written in C.
+
 
 gcc web2.c -o web -lssl -lcrypto
 
@@ -40,3 +43,17 @@ dpkg-deb --build spyderfly-pkg spyderfly_beta_1.0_amd64.deb
 mv spyderfly_beta_1.0_amd64.deb /var/www/repos/spyderfly/releases/beta_1.0/spyderfly_beta_1.0_amd64.deb
 rm /var/www/repos/spyderfly/releases/latest/latest.deb
 cp /var/www/repos/spyderfly/releases/beta_1.0/spyderfly_beta_1.0_amd64.deb /var/www/repos/spyderfly/releases/latest/latest.deb
+
+
+
+
+to start fresh:
+
+
+config.h / config.c: Dedicated entirely to reading .conf files, validating required directives like listen and root, and populating your configuration structs without mixing socket code into the parser.
+
+server.h / server.c: Handles low-level POSIX network setup—creating the socket, setting SO_REUSEADDR, binding to the validated port, and managing the listen queue.
+
+http.h / http.c: Focuses purely on parsing incoming client requests, extracting the Host header for virtual hosting, matching it against your loaded configurations, and streaming the correct index.html file back to the client.
+
+main.c: Acts as the lightweight controller—handles the first-run installation checks, triggers directory creation, loads the site configurations, supports the -t test flag, and boots the main event loop.

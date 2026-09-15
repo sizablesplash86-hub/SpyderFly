@@ -2,20 +2,22 @@
 set -e
 
 MAIN_DIR="/etc/spyderfly"
-SITES_DIR="/etc/spyderfly/sites"
+SITES_DIR="/etc/spyderfly/enabled-sites"
 INDEX_DIR="/etc/spyderfly/index"
 CONF_DIR="/etc/spyderfly/config"
+DIS_SITE="/etc/spyderfly/disabled-sites"
+LOG_DIR="/var/spyderfly"
 IND_HTM="https://repo.sizablesplash.com/spyderfly/shell-script/working.html"
   # change per version
 CURR_VER="https://repo.sizablesplash.com/spyderfly/releases/beta_1.0/beta_1.0"
 OUTPUT="/usr/bin/spyderfly"
-DEF_CONF="/etc/spyderfly/sites/default.conf"
+DEF_CONF="/etc/spyderfly/enabled-sites/default.conf"
 
 
 echo "Welcome to the SpyderFly web server beta 1.0! Thank you for choosing SpyderFly"
 
 echo "Creating directories..."
-mkdir -p "$MAIN_DIR" "$INDEX_DIR" "$SITES_DIR" "$CONF_DIR"
+mkdir -p "$MAIN_DIR" "$INDEX_DIR" "$SITES_DIR" "$CONF_DIR" "$DIS_SITE" "$LOG_DIR"
 
 if [ -f "$OUTPUT" ]; then
     rm -f "$OUTPUT"

@@ -1,0 +1,95 @@
+MODULES+=	otel
+
+MODULE_SUMMARY_otel=	OpenTelemetry dynamic module
+
+MODULE_CONTRIB_DEPS_otel=	nginx-otel \
+							abseil-cpp \
+							grpc \
+							opentelemetry-cpp \
+							opentelemetry-proto \
+							protobuf
+
+include $(foreach dep,$(MODULE_CONTRIB_DEPS_otel),$(CONTRIB)/src/$(dep)/version)
+
+MODULE_VERSION_otel=	$(NGINX_OTEL_VERSION)
+MODULE_RELEASE_otel=	1
+
+MODULE_VERSION_PREFIX_otel=$(MODULE_TARGET_PREFIX)
+
+MODULE_SOURCES_otel=	nginx-otel-$(NGINX_OTEL_VERSION)-$(NGINX_OTEL_GITHASH).tar.gz \
+			opentelemetry-cpp-$(OPENTELEMETRY_CPP_VERSION).tar.gz \
+			opentelemetry-proto-$(OPENTELEMETRY_PROTO_VERSION).tar.gz \
+			protobuf-$(PROTOBUF_VERSION).tar.gz
+
+MODULE_PATCHES_otel=
+
+MODULE_CONFARGS_otel=   --add-dynamic-module=$(MODSRC_PREFIX)/nginx-otel-$(NGINX_OTEL_GITHASH)/
+
+prerequisites-for-module-otel:
+
+MODULE_BUILD_DEPENDS_otel=cmake protobuf-dev grpc-dev
+
+define MODULE_PREBUILD_otel
+export PATH=$$builddir/prebuilt/bin/:$$PATH \&\& \
+export NGX_OTEL_PROTO_DIR=$$builddir/../opentelemetry-proto-$(OPENTELEMETRY_PROTO_VERSION) \&\& \
+export CMAKE_PREFIX_PATH=$$builddir/prebuilt/ \&\& \
+export CMAKE_GENERATOR="Unix Makefiles" \&\& \
+DESIRED="3.19.0" \&\& \
+source /etc/os-release \&\&
+if [ "$$(printf "%s\\n%s\\n" "$$DESIRED" "$$VERSION_ID" | sort | tail -n 1)" == "$$VERSION_ID" ]; then
+echo "not building protobuf since package manager already has what we need"
+else
+cd $$builddir/../protobuf-$(PROTOBUF_VERSION) \&\& mkdir build \&\& cd build \&\& \
+    cmake \
+    -DCMAKE_CXX_STANDARD=17 \
+    -DCMAKE_CXX_EXTENSIONS=OFF \
+    -DCMAKE_CXX_VISIBILITY_PRESET=hidden \
+    -DCMAKE_POLICY_DEFAULT_CMP0063=NEW \
+    -DCMAKE_PREFIX_PATH=$$builddir/prebuilt/ \
+    -DCMAKE_INSTALL_PREFIX:STRING=$$builddir/prebuilt/ \
+    -DCMAKE_INSTALL_LIBDIR:STRING=lib \
+    -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
+    -Dprotobuf_BUILD_TESTS=OFF \
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+    ../cmake/ \&\& \
+    make $$_make_opts install
+fi \&\& \
+cd $$builddir/../opentelemetry-cpp-$(OPENTELEMETRY_CPP_VERSION) \&\& mkdir build \&\& cd build \&\& \
+    cmake \
+    -DCMAKE_CXX_STANDARD=17 \
+    -DCMAKE_CXX_EXTENSIONS=OFF \
+    -DCMAKE_POLICY_DEFAULT_CMP0063=NEW \
+    -DCMAKE_CXX_VISIBILITY_PRESET=hidden \
+    -DCMAKE_PREFIX_PATH=$$builddir/prebuilt/ \
+    -DCMAKE_INSTALL_PREFIX:STRING=$$builddir/prebuilt/ \
+    -DCMAKE_INSTALL_LIBDIR:STRING=lib \
+    -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
+    -DBUILD_TESTING=OFF \
+    -DWITH_BENCHMARK=OFF \
+    -DWITH_EXAMPLES=OFF \
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+    ../ \&\& \
+    make $$_make_opts install || \
+exit 1
+export NGX_OTEL_CMAKE_OPTS="-DNGX_OTEL_GRPC=package -DNGX_OTEL_SDK=package -DNGX_OTEL_PROTO_DIR=$$NGX_OTEL_PROTO_DIR"
+endef
+export MODULE_PREBUILD_otel
+
+define MODULE_PREINSTALL_otel
+endef
+export MODULE_PREINSTALL_otel
+
+define MODULE_POST_otel
+cat <<BANNER
+----------------------------------------------------------------------
+
+The $(MODULE_SUMMARY_otel) for $(MODULE_SUMMARY_PREFIX) has been installed.
+To enable this module, add the following to /etc/nginx/nginx.conf
+and reload nginx:
+
+    load_module modules/ngx_otel_module.so;
+
+----------------------------------------------------------------------
+BANNER
+endef
+export MODULE_POST_otel

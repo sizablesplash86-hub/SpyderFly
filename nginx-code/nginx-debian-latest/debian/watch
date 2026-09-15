@@ -1,0 +1,5 @@
+Version: 5
+
+Source: https://nginx.org/download/
+Matching-Pattern: nginx-(\d+\.\d+[02468]\.\d+)\.tar\.gz
+Pgpsigurlmangle: s/$/.asc/
