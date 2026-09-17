@@ -3,6 +3,6 @@ Version: 1.0
 Section: utils
 Priority: optional
 Architecture: amd64
-Depends: certbot
+Depends: certbot python3
 Maintainer: sizablesplash86
 Description: Web server inspired by NGINX made easy

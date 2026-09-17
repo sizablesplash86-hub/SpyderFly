@@ -1,3 +1,5 @@
+// abandoned     see beta 2.0
+
 // Sources from C Programming A Modern Approach Second Edition by: K. N. King
 // Stuff not in the book sources are from Google. If they aren't in the book, chapter and page are not listed.
 #include <bits/sockaddr.h>
@@ -85,7 +87,6 @@ int main()
 
       printf("Loading %s ...", entry->d_name);
 
- //   SiteConfig current_site;
       load_sites(site_path, &loaded_sites[site_count]);
       site_count++;
     }
@@ -157,8 +158,6 @@ int main()
 
     char request[1024];
     read(client_fd, request, sizeof(request) - 1);
-
-    //
     char *active_root = "/etc/spyderfly/index/";
     if (site_count > 0) active_root = loaded_sites[0].root;
 

@@ -9,7 +9,11 @@ DIS_SITE="/etc/spyderfly/disabled-sites"
 LOG_DIR="/var/spyderfly"
 IND_HTM="https://repo.sizablesplash.com/spyderfly/shell-script/working.html"
   # change per version
-CURR_VER="https://repo.sizablesplash.com/spyderfly/releases/beta_1.0/beta_1.0"
+CODE_ZIP="https://repo.sizablesplash.com/spyderfly/releases/v1.0/v1.0.zip"
+  # change per version
+CODE_OUT="/etc/spyderfly/source-code.zip"
+CODE_DIR="/etc/spyderfly/code"
+CURR_VER="https://repo.sizablesplash.com/spyderfly/releases/v1.0/v1.0"
 OUTPUT="/usr/bin/spyderfly"
 DEF_CONF="/etc/spyderfly/enabled-sites/default.conf"
 
@@ -26,6 +30,11 @@ fi
 echo "Installing binary..."
 curl -sSL "$CURR_VER" -o "$OUTPUT"
 chmod +x "$OUTPUT"
+
+echo "Downloading source code..."
+curl -sSL "$CODE_ZIP" -o "$CODE_OUT"
+
+unzip -o "$CODE_OUT" -d "$CODE_DIR"
 
 if [ ! -f "$INDEX_DIR/index.html" ]; then
   curl -sSL "$IND_HTM" -o "$INDEX_DIR/index.html"

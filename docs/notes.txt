@@ -3,10 +3,11 @@ I should use this to make a built in nextcloud LEMP stacks web server on port 20
 openssl I think is written in C while certbot is python.
 openSSH is written in C.
 
-
+# compile for ssl stuff
 gcc web2.c -o web -lssl -lcrypto
 
-
+# compile for windows
+x86_64-w64-mingw32-gcc hello.c -o spyderfly.exe -mwindows
 
 echo "# SpyderFly" >> README.md
 git init

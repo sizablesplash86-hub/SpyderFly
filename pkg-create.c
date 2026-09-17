@@ -29,6 +29,9 @@ int main()
   );
   fclose(fp);
 
+  //     https://github.com/sizablesplash86-hub/nginx-auto-config/archive/refs/tags/v3.0.0.zip
+  // make sure this matches postinst and the shell install script
+
   system("rm /var/www/repos/spyderfly/releases/latest/latest");
   system("gcc -O2 install.c -o /var/www/repos/spyderfly/releases/latest/latest");
   system("chmod +x /var/www/repos/spyderfly/releases/latest/latest");
@@ -38,4 +41,15 @@ int main()
   system("mv spyderfly_%s_amd64.deb /var/www/repos/spyderfly/releases/v%s/spyderfly_%s_amd64.deb", version, version, version);
   system("rm /var/www/repos/spyderfly/releases/latest/latest.deb");
   system("cp /var/www/repos/spyderfly/releases/v%s/spyderfly_%s_amd64.deb /var/www/repos/spyderfly/releases/latest/latest.deb", version, version);
+
+  char git;
+  printf("Update github and press enter: ");
+  scanf(" %c", &git);
+  if (git == 'q') return 0;
+
+  else
+  {
+    printf("adding github source code");
+    system("wget https://github.com/sizablesplash86-hub/spyderfly/archive/refs/tags/v%s.zip -O /var/www/repos/spyderfly/releases/v%s/", version, version);
+  }
 }
