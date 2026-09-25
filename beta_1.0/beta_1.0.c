@@ -130,7 +130,7 @@ int main()
   addr.sin_port = htons(target_port);
   addr.sin_addr.s_addr = INADDR_ANY;
 
-// socket(AF_INET, SOCK_STREAM, 0);
+  socket(AF_INET, SOCK_STREAM, 0);
   int bind_status = bind(sockfd, (struct sockaddr *)&addr, sizeof(addr));
   if (bind_status < 0)
   {
@@ -201,6 +201,5 @@ int main()
       write(client_fd, not_found, strlen(not_found));
     }
     close(client_fd);
-  }
-  //
-}
+  } // loop ends here
+} // main ends here

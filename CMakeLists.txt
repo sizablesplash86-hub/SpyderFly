@@ -8,7 +8,7 @@ set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 
 # Option A: Option 1 approach (Single executable compiled from multiple sources)
-add_executable(spyderfly install.c)
+add_executable(spyderfly beta_2.0/beta_2.0.c beta_2.0/load_sites.c)
 
 # Option B: Option 2 approach (If you want two separate executables)
 # add_executable(start start.c)

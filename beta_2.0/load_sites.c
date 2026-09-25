@@ -12,8 +12,8 @@
 void load_sites(const char *filepath, SiteConfig *config)
 {
  config->port = 0;
-  snprintf(config->root, sizeof(config->root), "/etc/spyderfly/index");
-  snprintf(config->domain, sizeof(config->domain), "localhost");
+//  snprintf(config->root, sizeof(config->root), "/etc/spyderfly/index");
+//  snprintf(config->domain, sizeof(config->domain), "localhost");
 
   FILE *idk = fopen(filepath, "r");
   if (idk == NULL)

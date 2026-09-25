@@ -1,0 +1,16 @@
+checklist:
+
+bare needs:
+* http port number
+* directory https
+* proxy https
+* certbot
+* background process
+* updates
+
+other features:
+* auto config
+* updates
+* test & reload
+* Minecraft loopback
+* feedback command

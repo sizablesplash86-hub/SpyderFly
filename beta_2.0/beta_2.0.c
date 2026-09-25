@@ -1,3 +1,11 @@
+/*
+* SpyderFly Web Server
+* Copyright (C) Sizable Splash
+*
+* Web server inspired by NGINX
+* Please support Igor Sysoev & Nginx Inc.
+*/
+
 #include <stdio.h>  // standard I/O, on every page pretty much
 #include <stdlib.h>  // standard library functions  chapter 10.2 p.224
 #include <string.h>  // string operations  entirety of chaper 13
@@ -5,20 +13,168 @@
 #include <dirent.h>  // POSIX for directories on UNIX based OS
 #include <stddef.h>
 #include <sys/socket.h>  // imma pretend I know what "socket functions" are
-#include <sys/stat.h>  // mkdir command
 #include <netinet/in.h>  // IP and stuff
 #include <bits/sockaddr.h>
 #include "config.h"
 
-  //project started 9/12/26 and this version started 9/15/26
+#define FILE_SIZE 1024
 
 int main()
 {
   printf("\nWelcome to SpyderFly %s!\n\nRead the docs at \033[34mhttps://spyderfly.sizablesplash.com\033[0m\n", CURRENT_VERSION);
 
-  // https://gemini.google.com/app/2afd71c0a629b5ff
-  // https://gemini.google.com/app/e9cbc5fc7bd8982d
-  // https://claude.ai/chat/71e94e7d-da19-411d-93e1-44243e24ea52
+  printf("opening /etc/spyderfly/spyderfly.conf...\n");
+  FILE *fp = fopen("/etc/spyderfly/spyderfly.conf", "r");
+  char line[FILE_SIZE];
+  const char *target = "include";
+  int found = 0;
+  while (fgets(line, sizeof(line), fp) != NULL)
+  {
+    if (strncmp(line, "include *", 7) == 0)
+    {
+      found = 1;
+      break;
+    }
+  }
+  fclose(fp);
+  line[strcspn(line, ";")] = 0;
+  if (found) printf("\nFound %s\n", line);
 
-  // read through /mnt/code-projects/packages/web-server/nginx-examples/nginx/source-code/src/core/ngx_conf_file.c  to understand how it handles the config
+  else printf("\nERROR include sites not found\n\n");
+  // end of new code
+
+
+  SiteConfig loaded_sites[10];
+  int site_count = 0;
+
+  printf("[*] opening sites folder\n");
+  DIR *dir = opendir("/etc/spyderfly/enabled-sites");
+  if (dir != NULL)
+  {
+    struct dirent *entry;
+    while ((entry = readdir(dir)) != NULL && site_count < 10)
+    {
+      if (entry->d_name[0] == '.') continue;
+
+      char site_path[STR_LEN];
+      snprintf(site_path, sizeof(site_path), "/etc/spyderfly/enabled-sites/%s", entry->d_name);
+
+      printf("Loading /etc/spyderfly/enabled-sites/%s...\n\n", entry->d_name);
+
+    load_sites(site_path, &loaded_sites[site_count]);
+      site_count++;
+    }
+    closedir(dir);
+  }
+  else perror("Failed to load sites");
+  
+  int target_port = 0;
+  for (int i = 0; i < site_count; i++)
+  {
+    if (loaded_sites[i].port > 0)
+    {
+      target_port = loaded_sites[i].port;
+      break;
+    }
+  }
+
+  if (target_port == 0)
+  {
+    fprintf(stderr, "Fatal: No valid ports found in any configuration files.\n");
+    exit(EXIT_FAILURE);
+  }
+
+  int sockfd = socket(AF_INET, SOCK_STREAM, 0);
+  if (sockfd < 0)
+  {
+    perror("Socket creation failed\n");
+    exit(EXIT_FAILURE);
+  }
+
+  int opt = 1;
+  if (setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt)) < 0)
+  {
+    perror("setsockopt failed");
+    close(sockfd);
+    exit(EXIT_FAILURE);
+  }
+
+  struct sockaddr_in addr;
+  addr.sin_family = AF_INET;
+  addr.sin_port = htons(target_port);  // change
+  addr.sin_addr.s_addr = INADDR_ANY;
+
+  socket(AF_INET, SOCK_STREAM, 0);
+  int bind_status = bind(sockfd, (struct sockaddr *)&addr, sizeof(addr));  // fix
+  if (bind_status < 0)
+  {
+    perror("Failed to bind address\n");
+    close(sockfd);  // fix
+    exit(EXIT_FAILURE);
+  }
+
+  if (listen(sockfd, 10) < 0)  // fix
+  {
+    perror("Listen failed\n");
+    close(sockfd);  // fix
+    exit(EXIT_FAILURE);
+  }
+
+  printf("\nWeb server active!\n");
+  while(1)
+  {
+    int client_fd = accept(sockfd, NULL, NULL);
+    if (client_fd < 0)
+    {
+      perror("accept failed");
+      continue;
+    }
+
+    // this section is wrong
+    char request[1024];
+    read(client_fd, request, sizeof(request) - 1);
+    char *active_root = "/etc/spyderfly/index/";
+    if (site_count > 0) active_root = loaded_sites[0].root;
+
+    char *host_line = strstr(request, "Host: ");
+    if (host_line != NULL)
+    {
+      char requested_host[STR_LEN];
+      if (sscanf(host_line, "Host: %s", requested_host) == 1)
+      {
+        char *port_seperator = strchr(requested_host, ':');
+        if (port_seperator != NULL) *port_seperator = '\0';
+
+        for (int i = 0; i < site_count; i++)
+        {
+          if (strstr(loaded_sites[i].root, "index") != NULL)
+          {
+            target_port = loaded_sites[i].port;
+            break;
+          }
+        }
+      }
+    }
+    //
+    char file_to_serve[STR_LEN];
+    snprintf(file_to_serve, sizeof(file_to_serve), "%s/index.html", active_root);
+
+    FILE *fts = fopen(file_to_serve, "r");
+    if (fts != NULL)
+    {
+      char *header = "HTTP/1.1 200 OK\r\nContent-Type: text/html; charset=UTF-8\r\n\r\n";
+      write(client_fd, header, strlen(header));
+
+      char file_buffer[1024];
+      size_t bytes_read;
+      while ((bytes_read = fread(file_buffer, 1, sizeof(file_buffer), fts)) > 0) write(client_fd, file_buffer, bytes_read);
+      fclose(fts);
+    }
+    else
+    {
+      char *not_found = "HTTP/1.1 404 Not Found\r\nContent-Type: text/plain\r\n\r\n404 Index Not Found";
+      write(client_fd, not_found, strlen(not_found));
+    }
+    close(client_fd);
+  }
 }

@@ -1,0 +1,9 @@
+https://gemini.google.com/app/2afd71c0a629b5ff
+https://gemini.google.com/app/e9cbc5fc7bd8982d
+https://claude.ai/chat/71e94e7d-da19-411d-93e1-44243e24ea52
+
+read through     /mnt/code-projects/packages/web-server/nginx-examples/nginx/source-code/src/core/ngx_conf_file.c  to understand how it handles the config
+
+project started 9/12/26 and this beta_2.0 started 9/15/26
+
+do a sudo spyderfly --update command

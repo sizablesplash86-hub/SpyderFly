@@ -8,6 +8,8 @@
 char options;
 //char options[STR_LEN];
 
+// this will eventually become the spyderfly binary. Change it to work with --example
+
 int main()
 {
   printf("What would you like to do?\n\n 1) Manage sites\n 2) run auto config\n 3) test sites\n Please choose: ");
