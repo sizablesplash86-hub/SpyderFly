@@ -39,9 +39,6 @@ int main()
   printf("\nWelcome to the SpyderFly web server %s!\n\n", CURRENT_VERSION);
 
   // the upstream config
-
-  // add a part for the root as well being imported from the conf file
-
   snprintf(conf, sizeof(conf), "/etc/spyderfly/config/spyderfly.conf");
   FILE *fp = fopen(conf, "r");
   if (fp == NULL) perror("Could not find the main config file\n");
@@ -109,9 +106,10 @@ int main()
     exit(EXIT_FAILURE);
   }
 
-  printf("\nSpyderFly Web server upstream active! press ctrl+C to stop\n");
+  printf("\nWeb server active! press ctrl+C to stop\n");
   while(1)
   {
+    // add this crap later
     int client_fd = accept(sockfd, NULL, NULL);
     if (client_fd < 0)
     {
@@ -121,12 +119,9 @@ int main()
 
     char request[1024];
     read(client_fd, request, sizeof(request) - 1);
-    char *upstream_root = "/etc/spyderfly/index/";  // change this to import from the conf file
+    char *active_root = "/etc/spyderfly/index/";
 
-
-
-/*  this was some code from the earlier beta versions I'm leaving for reference... prob be removed later
-
+/*
     if (site_count > 0) active_root = loaded_sites[0].root;
 
     char *host_line = strstr(request, "Host: ");
@@ -150,10 +145,8 @@ int main()
     }
 */
 
-
-
     char file_to_serve[STR_LEN];
-    snprintf(file_to_serve, sizeof(file_to_serve), "%s/index.html", upstream_root);
+    snprintf(file_to_serve, sizeof(file_to_serve), "%s/index.html", active_root);
 
     FILE *fts = fopen(file_to_serve, "r");
     if (fts != NULL)

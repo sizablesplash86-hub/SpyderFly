@@ -1,0 +1,11 @@
+[Unit]
+Description=SpyderFly Web Server
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/etc/spyderfly/spyderfly_service
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
