@@ -228,7 +228,5 @@ int main()
       write(client_fd, not_found, strlen(not_found));
     }
     close(client_fd);
-    //
-  }
-    
-}
+  }  // end of loop
+}  // end of main

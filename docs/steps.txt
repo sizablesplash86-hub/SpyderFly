@@ -13,3 +13,4 @@ other features:
 * updates
 * test & reload
 * Minecraft loopback
+* add during shell script to install spyderfly certbot. If no, you can run sudo spyderfly certbot-install to install.
