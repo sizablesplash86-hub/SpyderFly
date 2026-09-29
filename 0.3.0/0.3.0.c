@@ -1,5 +1,5 @@
 /* * * * * * * * * * * * * * * *
- *  SpyderFly Upstream Handler *
+ * SpyderFly Upstream Handler  *
  * * * * * * * * * * * * * * * */
 
 #include <stdio.h>  // standard I/O, on every page pretty much
@@ -34,20 +34,42 @@ typedef struct
 } 
 SiteConfig;
 
+// Figure this out
+void handle_client_request(int client_fd, SiteConfig *site)
+{
+  char file_to_serve[STR_LEN];
+  snprintf(file_to_serve, sizeof(file_to_serve), "%s/index.html", site->root);
+
+  FILE *fts = fopen(file_to_serve, "r");
+  if (fts != NULL)
+  {
+    char *header = "HTTP/1.1 200 OK\r\nContent-Type: text/html; charset=UTF-8\r\n\r\n";
+    write(client_fd, header, strlen(header));
+
+    char file_buffer[1024];
+    size_t bytes_read;
+    while ((bytes_read = fread(file_buffer, 1, sizeof(file_buffer), fts)) > 0) write(client_fd, file_buffer, bytes_read);
+
+    fclose(fts);
+  }
+  else
+  {
+    char *not_found = "HTTP/1.1 404 Not Found\r\nContent-Type: text/plain\r\n\r\nSite Index Not Found";
+    write(client_fd, not_found, strlen(not_found));
+  }
+}
+
 int main()
 {
   printf("\nWelcome to the SpyderFly web server %s!\n\n", CURRENT_VERSION);
 
   // the upstream config
-
-  // add a part for the root as well being imported from the conf file
-
   snprintf(conf, sizeof(conf), "/etc/spyderfly/config/spyderfly.conf");
-  FILE *fp = fopen(conf, "r");
-  if (fp == NULL) perror("Could not find the main config file\n");
+  FILE *pt = fopen(conf, "r");
+  if (pt == NULL) perror("Could not find the main config file\n");
   char line[FILE_SIZE];
   int found = 0;
-  while (fgets(line, sizeof(line), fp) != NULL)
+  while (fgets(line, sizeof(line), pt) != NULL)
   {
     if (strncmp(line, "listen *", 6) == 0)
     {
@@ -55,7 +77,7 @@ int main()
       break;
     }
   }
-  fclose(fp);
+  fclose(pt);
 
   char *port = line + 6;
   if (found)
@@ -71,6 +93,41 @@ int main()
     printf("\nPort not found\n\n");
     return 0;
   }
+
+  /*
+  // finds the root; fix this later
+
+  FILE *rt = fopen(conf, "r");
+  if (rt == NULL) perror("Could not find the main config file\n");
+  
+  char tdb[FILE_SIZE];
+  int idk = 0;
+
+  while (fgets(tdb, sizeof(tdb), rt) != NULL)
+  {
+    if (strncmp(tdb, "root *", 4) == 0)
+    {
+      idk = 1;
+      break;
+    }
+  }
+  fclose(rt);
+
+  char *root = tdb + 4;
+  if (idk)
+  {
+    tdb[strcspn(tdb, "/\r\n;")] =0;
+    
+    while (*root == ' ' || *root == '\t') root++;
+    printf("Root %s found!\n\n", root);
+  }
+
+  else 
+  {
+    printf("\nRoot not found\n\n");
+    return 0;
+  }    */
+  // end of new code
 
   int sockfd = socket(AF_INET, SOCK_STREAM, 0);
   if (sockfd < 0)
@@ -121,8 +178,7 @@ int main()
 
     char request[1024];
     read(client_fd, request, sizeof(request) - 1);
-    char *upstream_root = "/etc/spyderfly/index/";  // change this to import from the conf file
-
+    char *root = "/etc/spyderfly/index/";  // change this to import from the conf file. Code is there, just figure it out
 
 
 /*  this was some code from the earlier beta versions I'm leaving for reference... prob be removed later
@@ -151,9 +207,9 @@ int main()
 */
 
 
-
+    // this can honestly probably be removed, all it does is prove that the software is online.
     char file_to_serve[STR_LEN];
-    snprintf(file_to_serve, sizeof(file_to_serve), "%s/index.html", upstream_root);
+    snprintf(file_to_serve, sizeof(file_to_serve), "%s/index.html", root);
 
     FILE *fts = fopen(file_to_serve, "r");
     if (fts != NULL)
@@ -172,6 +228,7 @@ int main()
       write(client_fd, not_found, strlen(not_found));
     }
     close(client_fd);
+    //
   }
     
 }
