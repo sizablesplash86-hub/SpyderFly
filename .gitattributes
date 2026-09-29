@@ -1,2 +1,3 @@
 reference-code/** linguist-detectable=false
 beta_2.0/headers/** linguist-detectable=false
+build/** linguist-detectable=false
