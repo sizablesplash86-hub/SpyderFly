@@ -1,4 +1,4 @@
-zfrom certbot.plugins import common
+from certbot.plugins import common
 from certbot import interfaces
 from zope.interface import implementer
 import os
@@ -14,30 +14,23 @@ class Configurator(common.Plugin, interfaces.Configurator):
         return "Automates obtaining and deploying SSL certificates for the SpyderFly web server."
 
     def prepare(self):
-        # Verify that SpyderFly configuration directories exist on disk
         if not os.path.exists("/etc/spyderfly"):
             logger.warning("SpyderFly config directory /etc/spyderfly not found.")
 
     def get_chall_pref(self, domain):
-        # We prefer HTTP-01 challenges
         return []
 
     def perform(self, achalls):
-        # Handle HTTP-01 challenge token placement
         responses = []
         for achall in achalls:
-            # Drop validation file into the site's webroot .well-known/acme-challenge/
             response = achall.response(achall.account.key)
-            # (In a full implementation, write response.key_authorization to achall.path)
             responses.append(response)
         return responses
 
     def cleanup(self, achalls):
-        # Clean up challenge tokens after validation
         pass
 
     def deploy_cert(self, domain, cert_path, key_path, chain_path, fullchain_path):
-        # Copy or link the newly issued Let's Encrypt files to SpyderFly's expected path
         target_dir = f"/etc/spyderfly/certs/{domain}"
         os.makedirs(target_dir, exist_ok=True)
         
@@ -68,5 +61,4 @@ class Configurator(common.Plugin, interfaces.Configurator):
         pass
 
     def restart(self):
-        # Optional: send a signal or restart your C server daemon if needed
         pass

@@ -1,0 +1,5 @@
+sudo pip install -e . --break-system-packages --config-settings editable_mode=compat
+
+sudo certbot plugins
+
+sudo certbot --spyderfly -d example.sizablesplash.com
