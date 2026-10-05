@@ -1,13 +1,40 @@
-// File 5
+// File  9
 #include "core.h"
 
-void upstream(int sockfd, const char *conf_port)
+void site_bind(const char *ste_port, const char *ste_root)
 {
-  printf("\nSpyderFly active on port %s!\n", conf_port);
+  int port_num = atoi(ste_port);
+  int sockfd = socket(AF_INET, SOCK_STREAM, 0);
+  if (sockfd < 0)
+  {
+    perror("Socket creation failed");
+    return;
+  }
+
+  int opt = 1;
+  setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));
+
+  struct sockaddr_in addr;
+  addr.sin_family = AF_INET;
+  addr.sin_port = htons(port_num);
+  addr.sin_addr.s_addr = INADDR_ANY;
+
+  printf("Site parsed its port correctly\n");
+
+  if (bind(sockfd, (struct sockaddr *)&addr, sizeof(addr)) < 0)
+  {
+    perror("Failed to bind address");
+    return;
+  }
+
+  if (listen(sockfd, 10) < 0)
+  {
+    perror("Listen failed");
+    return;
+  }
+
   while(1)
   {
-    load_sites();  // File 6
-
     int client_fd = accept(sockfd, NULL, NULL);
     if (client_fd < 0)
     {
@@ -22,11 +49,11 @@ void upstream(int sockfd, const char *conf_port)
     sscanf(request, "%s %s %s", method, uri, protocol);
 
     char file_to_serve[STR_LEN * 2];
-    if (strcmp(uri, "/") == 0) snprintf(file_to_serve, sizeof(file_to_serve), "%s/index.html", conf_root);
+    if (strcmp(uri, "/") == 0) snprintf(file_to_serve, sizeof(file_to_serve), "%s/index.html", ste_root);
     else 
     {
       size_t len = strlen(uri);
-      if (uri[len - 1] == '/') snprintf(file_to_serve, sizeof(file_to_serve), "%s%sindex.html", conf_root, uri);
+      if (uri[len - 1] == '/') snprintf(file_to_serve, sizeof(file_to_serve), "%s%sindex.html", ste_root, uri);
       else snprintf(file_to_serve, sizeof(file_to_serve), "%s%s", conf_root, uri);
     }
     FILE *fts = fopen(file_to_serve, "r");
@@ -49,10 +76,10 @@ void upstream(int sockfd, const char *conf_port)
         "Connection: close\r\n\r\n"
         "<html><head><title>SpyderFly Site Not Found</title></head>"
         "<body><center><h1>SpyderFly Site Not Found</h1></center>"
-        "<center>DaemonCraft is a branch of SpyderFly. Visit <a href=\"https://spyderfly.sizablesplash.com/support/\">https://spyderfly.sizablesplash.com/support/</a> for support</center></body></html>";
+        "<center>Visit <a href=\"https://spyderfly.sizablesplash.com/support/\">https://spyderfly.sizablesplash.com/support/</a> for support</center></body></html>";
 
       write(client_fd, not_found, strlen(not_found));
     }
     close(client_fd);
   }  // end of loop
-}  // end of main
+}

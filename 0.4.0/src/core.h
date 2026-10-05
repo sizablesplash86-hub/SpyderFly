@@ -1,5 +1,4 @@
 // File 0
-
 #define CORE_H
 
 #include <stdio.h>
@@ -23,6 +22,9 @@
 extern char conf[STR_LEN];
 extern char conf_port[STR_LEN];
 extern char conf_root[STR_LEN];
+extern char site_log[FILE_SIZE];
+extern char ste_root[STR_LEN];
+extern char ste_port[STR_LEN];
 
 int socket(int domain, int type, int protocol);
 int bind(int sockfd, const struct sockaddr *addr, socklen_t addrlen);
@@ -51,9 +53,11 @@ typedef struct
   int server_count;
 } NginxConfig;
 
-pid_t fork(void);  // this might not even be needed
-
+void load_sites(void);
 void port(const char *conf);
 void root(const char *conf);
+void site_root(const char *full_path);
+void site_port(const char *full_path);
+void site_bind(const char *ste_port, const char *ste_root);
 void ip_bind(const char *conf_port);
 void upstream(int sockfd, const char *conf_port);
