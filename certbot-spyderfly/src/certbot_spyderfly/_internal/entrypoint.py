@@ -1,3 +1,5 @@
+""" Entry point for SpyderFly Plugin """
+
 from certbot.plugins import common
 from certbot import interfaces
 from zope.interface import implementer
@@ -62,3 +64,5 @@ class Configurator(common.Plugin, interfaces.Configurator):
 
     def restart(self):
         pass
+
+ENTRYPOINT = Configurator

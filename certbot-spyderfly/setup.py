@@ -1,18 +1,12 @@
-from setuptools import setup, find_packages
+from setuptools import setup
+
+version = '0.1.0'
+
+install_requires = [
+    f'certbot[spyderfly]>={version}',
+]
 
 setup(
-    name="certbot-spyderfly",
-    version="0.1.0",
-    packages=find_packages(where="src"),
-    package_dir={"": "src"},
-    include_package_data=True,
-    install_requires=[
-        "certbot",
-        "acme",
-    ],
-    entry_points={
-        "certbot.plugins": [
-            "spyderfly = certbot_spyderfly._internal.entrypoint:Configurator",
-        ],
-    },
+    version=version,
+    install_requires=install_requires,
 )

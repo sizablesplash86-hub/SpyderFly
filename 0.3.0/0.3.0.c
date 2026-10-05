@@ -2,6 +2,10 @@
  * SpyderFly Upstream Handler  *
  * * * * * * * * * * * * * * * */
 
+// abandoned again for 0.4.0
+
+// check reference-code/fork.c
+
 #include <stdio.h>  // standard I/O, on every page pretty much
 #include <stdlib.h>  // standard library functions  chapter 10.2 p.224
 #include <string.h>  // string operations  entirety of chaper 13
@@ -33,31 +37,6 @@ typedef struct
   int port;
 } 
 SiteConfig;
-
-// Figure this out
-void handle_client_request(int client_fd, SiteConfig *site)
-{
-  char file_to_serve[STR_LEN];
-  snprintf(file_to_serve, sizeof(file_to_serve), "%s/index.html", site->root);
-
-  FILE *fts = fopen(file_to_serve, "r");
-  if (fts != NULL)
-  {
-    char *header = "HTTP/1.1 200 OK\r\nContent-Type: text/html; charset=UTF-8\r\n\r\n";
-    write(client_fd, header, strlen(header));
-
-    char file_buffer[1024];
-    size_t bytes_read;
-    while ((bytes_read = fread(file_buffer, 1, sizeof(file_buffer), fts)) > 0) write(client_fd, file_buffer, bytes_read);
-
-    fclose(fts);
-  }
-  else
-  {
-    char *not_found = "HTTP/1.1 404 Not Found\r\nContent-Type: text/plain\r\n\r\nSite Index Not Found";
-    write(client_fd, not_found, strlen(not_found));
-  }
-}
 
 int main()
 {
@@ -180,37 +159,17 @@ int main()
     read(client_fd, request, sizeof(request) - 1);
     char *root = "/etc/spyderfly/index/";  // change this to import from the conf file. Code is there, just figure it out
 
+    char method[16], uri[STR_LEN], protocol[16];
+    sscanf(request, "%s %s %s", method, uri, protocol);
+    char file_to_serve[STR_LEN * 2];
 
-/*  this was some code from the earlier beta versions I'm leaving for reference... prob be removed later
-
-    if (site_count > 0) active_root = loaded_sites[0].root;
-
-    char *host_line = strstr(request, "Host: ");
-    if (host_line != NULL)
+    if (strcmp(uri, "/") == 0) snprintf(file_to_serve, sizeof(file_to_serve), "%s/index.html", root);
+    else 
     {
-      char requested_host[STR_LEN];
-      if (sscanf(host_line, "Host: %s", requested_host) == 1)
-      {
-        char *port_seperator = strchr(requested_host, ':');
-        if (port_seperator != NULL) *port_seperator = '\0';
-
-        for (int i = 0; i < site_count; i++)
-        {
-          if (strstr(loaded_sites[i].root, "index") != NULL)
-          {
-            target_port = loaded_sites[i].port;
-            break;
-          }
-        }
-      }
+      size_t len = strlen(uri);
+      if (uri[len - 1] == '/') snprintf(file_to_serve, sizeof(file_to_serve), "%s%sindex.html", root, uri);
+      else snprintf(file_to_serve, sizeof(file_to_serve), "%s%s", root, uri);
     }
-*/
-
-
-    // this can honestly probably be removed, all it does is prove that the software is online.
-    char file_to_serve[STR_LEN];
-    snprintf(file_to_serve, sizeof(file_to_serve), "%s/index.html", root);
-
     FILE *fts = fopen(file_to_serve, "r");
     if (fts != NULL)
     {
@@ -224,9 +183,17 @@ int main()
     }
     else
     {
-      char *not_found = "HTTP/1.1 404 Not Found\r\nContent-Type: text/plain\r\n\r\n404 Index Not Found";
+      // if sub-folder exists & index doesn't, white screen. Fix that somehow later...
+      char *not_found = 
+        "HTTP/1.1 404 Not Found\r\n"
+        "Content-Type: text/html; charset=UTF-8\r\n"
+        "Connection: close\r\n\r\n"
+        "<html><head><title>SpyderFly Site Not Found</title></head>"
+        "<body><center><h1>SpyderFly Site Not Found</h1></center>"
+        "<center>Visit <a href=\"https://spyderfly.sizablesplash.com/support/\">https://spyderfly.sizablesplash.com/support/</a> for support</center></body></html>";
+
       write(client_fd, not_found, strlen(not_found));
     }
     close(client_fd);
-  }  // end of loop
+  }        // end of loop
 }  // end of main

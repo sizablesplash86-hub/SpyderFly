@@ -20,7 +20,7 @@ typedef struct
   char domain[STR_LEN];
   char root[STR_LEN];
   int port;
-} 
+}
 SiteConfig;
 
 extern char example[STR_LEN];
