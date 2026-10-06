@@ -36,6 +36,6 @@ void site_root(const char *full_path)
   }
   else
   {
-    printf("Root not found\n");
+    printf("Root not found in %s\n", full_path);
   }
 }

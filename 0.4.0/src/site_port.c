@@ -29,7 +29,7 @@ void site_port(const char *full_path)
 
   else
   {
-    printf("\nPort not found\n\n");
+    printf("\nPort not found in %s\n\n", full_path);
     return;
   }
 }

@@ -7,6 +7,7 @@ char conf_root[STR_LEN];
 char site_log[FILE_SIZE];
 char ste_root[STR_LEN];
 char ste_port[STR_LEN];
+char ste_domain[STR_LEN];
 
 int main()
 {

@@ -28,6 +28,7 @@ void load_sites(void)
 
       site_root(full_path);
       site_port(full_path);
+      site_domain(full_path);  // figure out this
 
       printf("Creating site in %s on port %s\n", ste_root, ste_port);
 
@@ -64,12 +65,13 @@ void load_sites(void)
         
         FILE *f = fopen(full_path, "a");
         if (f != NULL)
-        {
-          fprintf(f, "pid=%d\n", pid);
+        { // make it so it adds it and removes it if its already there
+          fprintf(f, "\npid=%d\n", pid);
           fclose(f);
           printf("Site PID saved to configuration.\n");
         }
-        else {
+        else
+        {
           perror("Failed to update site.conf with PID");
         }
       }

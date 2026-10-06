@@ -13,3 +13,15 @@ file(GLOB_RECURSE CORE_SOURCES CONFIGURE_DEPENDS "src/*.c")
 # Create the executable from the collected core sources
 add_executable(spyderfly ${CORE_SOURCES})
 target_include_directories(spyderfly PRIVATE include)
+
+# Find OpenSSL package on the system
+find_package(OpenSSL REQUIRED)
+
+# Include OpenSSL header directories if needed
+include_directories(${OPENSSL_INCLUDE_DIR})
+
+# Make sure your spyderfly executable links against OpenSSL and pthread
+target_link_libraries(spyderfly 
+    OpenSSL::SSL 
+    OpenSSL::Crypto
+)

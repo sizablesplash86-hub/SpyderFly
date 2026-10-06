@@ -15,6 +15,10 @@
 #include <netinet/in.h>
 #include <bits/sockaddr.h>
 
+// third party
+#include <openssl/ssl.h>
+#include <openssl/err.h>
+
 #define FILE_SIZE 1024
 #define STR_LEN 256
 #define VERSION "0.4.0"
@@ -25,6 +29,7 @@ extern char conf_root[STR_LEN];
 extern char site_log[FILE_SIZE];
 extern char ste_root[STR_LEN];
 extern char ste_port[STR_LEN];
+extern char ste_domain[STR_LEN];
 
 int socket(int domain, int type, int protocol);
 int bind(int sockfd, const struct sockaddr *addr, socklen_t addrlen);
@@ -54,10 +59,12 @@ typedef struct
 } NginxConfig;
 
 void load_sites(void);
+void sdrfy_ssl(const char *ste_domain);
 void port(const char *conf);
 void root(const char *conf);
 void site_root(const char *full_path);
 void site_port(const char *full_path);
+void site_domain(const char *full_path);
 void site_bind(const char *ste_port, const char *ste_root);
 void ip_bind(const char *conf_port);
 void upstream(int sockfd, const char *conf_port);
