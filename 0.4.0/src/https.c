@@ -2,6 +2,9 @@
  * This is new and idk where to set it *
  * * * * * * * * * * * * * * * * * * * */
 
+// All the OpenSSL code is something I do not know. I need a book on it or smth
+// https://docs.openssl.org/
+
 #include "core.h"
 
 // Create the SSL Context structure
@@ -100,6 +103,22 @@ void sdrfy_ssl(const char *ste_domain)
     SSL *ssl = SSL_new(ctx);
     SSL_set_fd(ssl, client_sock);
 
+    char request[1024];
+    read(client_sock, request, sizeof(request) - 1);
+
+    char method[16], uri[STR_LEN], protocol[16];
+    sscanf(request, "%s %s %s", method, uri, protocol);
+
+    char file_to_serve[STR_LEN * 2];
+    if (strcmp(uri, "/") == 0) snprintf(file_to_serve, sizeof(file_to_serve), "%s/index.html", ste_root);
+    else 
+    {
+      size_t len = strlen(uri);
+      if (uri[len - 1] == '/') snprintf(file_to_serve, sizeof(file_to_serve), "%s%sindex.html", ste_root, uri);
+      else snprintf(file_to_serve, sizeof(file_to_serve), "%s%s", ste_root, uri);
+    }
+
+
     // Perform the TLS Handshake (encrypts the channel)
     if (SSL_accept(ssl) <= 0) ERR_print_errors_fp(stderr);
     else 
@@ -109,20 +128,36 @@ void sdrfy_ssl(const char *ste_domain)
       SSL_read(ssl, buffer, sizeof(buffer) - 1);
       printf("Received encrypted request:\n%s\n", buffer);
 
-      // Send back a secure HTTPS 200 OK response
-      const char *response = 
-        "HTTP/1.1 200 OK\r\n"
-        "Content-Type: text/html; charset=UTF-8\r\n\r\n"
-        "<h1>Hello from native C HTTPS!</h1>"
-        "<p>Encrypted via OpenSSL directly inside SpyderFly's architecture.</p>";
+      FILE *fts = fopen(file_to_serve, "r");
+      if (fts != NULL)
+      {
+        char *header = "HTTP/1.1 200 OK\r\nContent-Type: text/html; charset=UTF-8\r\n\r\n";
+        write(client_sock, header, strlen(header));
+  
+        char file_buffer[1024];
+        size_t bytes_read;
+        while ((bytes_read = fread(file_buffer, 1, sizeof(file_buffer), fts)) > 0) write(client_sock, file_buffer, bytes_read);
+        fclose(fts);
+      }
+      else
+      {  // if sub-folder exists & index doesn't, white screen. Fix that somehow later... add a part for auto index
+         // that is how it worked in DaemonCraft. With this, it will show blank screen if sub directory exists even with index or not. If sub folder doesn't exist, the error will show 
+        char *not_found = 
+          "HTTP/1.1 404 Not Found\r\n"
+          "Content-Type: text/html; charset=UTF-8\r\n"
+          "Connection: close\r\n\r\n"
+          "<html><head><title>SpyderFly Site Not Found</title></head>"
+          "<body><center><h1>SpyderFly Site Not Found</h1></center>"
+          "<center>DaemonCraft is a branch of SpyderFly. Visit <a href=\"https://spyderfly.sizablesplash.com/support/\">https://spyderfly.sizablesplash.com/support/</a> for support</center></body></html>";
 
-      SSL_write(ssl, response, strlen(response));
+//        write(client_sock, not_found, strlen(not_found));
+        SSL_write(ssl, not_found, strlen(not_found));
+      }
     }
-
     // Clean up the client SSL session and close the socket descriptor
     SSL_free(ssl);
     close(client_sock);
-  }
+  }  // might be wrong on this
 
   close(server_fd);
   SSL_CTX_free(ctx);

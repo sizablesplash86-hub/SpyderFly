@@ -33,7 +33,7 @@ class Configurator(common.Plugin, interfaces.Configurator):
         pass
 
     def deploy_cert(self, domain, cert_path, key_path, chain_path, fullchain_path):
-        target_dir = f"/etc/spyderfly/certs/{domain}"
+        target_dir = f"/etc/letsencrypt/live/{domain}"
         os.makedirs(target_dir, exist_ok=True)
         
         target_fullchain = os.path.join(target_dir, "fullchain.pem")

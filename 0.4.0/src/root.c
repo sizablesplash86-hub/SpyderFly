@@ -3,8 +3,6 @@
 
 void root(const char *conf)
 {
-  // finds the root; fix this later
-
   FILE *rt = fopen(conf, "r");
   if (rt == NULL) perror("Could not find the main config file\n");
   
@@ -32,6 +30,7 @@ void root(const char *conf)
     size_t len = strlen(ptr);
     if (len > 1 && ptr[len - 1] == '/') ptr[len - 1] = '\0';
     strncpy(conf_root, ptr, STR_LEN);
+    printf("Root is: %s\n", conf_root);
   }
 
   else

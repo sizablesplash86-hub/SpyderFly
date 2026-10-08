@@ -19,6 +19,9 @@ void load_sites(void)
   {
     if (entry->d_name[0] == '.') continue;
 
+    snprintf(site_name, sizeof(site_name), "%s", entry->d_name);
+    printf("Site name is %s\n", site_name);  // change them after verifying it works
+
     size_t len = strlen(entry->d_name);
     if (len > 5 && strcmp(entry->d_name + len - 5, ".conf") == 0)
     {
@@ -28,6 +31,7 @@ void load_sites(void)
 
       site_root(full_path);
       site_port(full_path);
+      
       site_domain(full_path);  // figure out this
 
       printf("Creating site in %s on port %s\n", ste_root, ste_port);
@@ -54,7 +58,7 @@ void load_sites(void)
         FILE *log = freopen(site_log, "w", stdout);
         freopen(site_log, "w", stderr);
 
-        site_bind(ste_port, ste_root);
+        site_bind(ste_port, ste_root);  // File 10
 
         printf("SpyderFly site worker active for %s\n", entry->d_name);
         exit(0);
@@ -70,10 +74,7 @@ void load_sites(void)
           fclose(f);
           printf("Site PID saved to configuration.\n");
         }
-        else
-        {
-          perror("Failed to update site.conf with PID");
-        }
+        else perror("Failed to update site.conf with PID");
       }
     }
   }

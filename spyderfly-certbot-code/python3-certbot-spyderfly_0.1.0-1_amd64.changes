@@ -1,0 +1,25 @@
+Format: 1.8
+Date: Wed, 07 Oct 2026 16:24:02 -0500
+Source: python3-certbot-spyderfly
+Binary: python3-certbot-spyderfly
+Architecture: all
+Version: 0.1.0-1
+Distribution: UNRELEASED
+Urgency: medium
+Maintainer: SizableSplash86
+Changed-By: root <root@deb>
+Description:
+ python3-certbot-spyderfly - Certbot authenticator and installer plugin for SpyderFly web serv
+Changes:
+ python3-certbot-spyderfly (0.1.0-1) UNRELEASED; urgency=medium
+ .
+   * Initial release. (Closes: #XXXXXX)
+Checksums-Sha1:
+ 2e0a3431a4f6071898457b736973b665b67e0809 3224 python3-certbot-spyderfly_0.1.0-1_all.deb
+ 92da14d330297793e16125d650827f6cc12b89e5 6163 python3-certbot-spyderfly_0.1.0-1_amd64.buildinfo
+Checksums-Sha256:
+ f97de8821f92aaed08cc9091e1462985e46495a698a66a45b256954bccc3a919 3224 python3-certbot-spyderfly_0.1.0-1_all.deb
+ ea7d12b530b9b2da21396ad41ce96d29222891b9a3ae317ce40210f1a83a63a4 6163 python3-certbot-spyderfly_0.1.0-1_amd64.buildinfo
+Files:
+ ea6eece61a06d23e47365be3413d26a3 3224 python optional python3-certbot-spyderfly_0.1.0-1_all.deb
+ 2a408c9ad5ed813db700c28251d1d841 6163 python optional python3-certbot-spyderfly_0.1.0-1_amd64.buildinfo

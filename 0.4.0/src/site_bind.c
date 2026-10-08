@@ -54,7 +54,7 @@ void site_bind(const char *ste_port, const char *ste_root)
     {
       size_t len = strlen(uri);
       if (uri[len - 1] == '/') snprintf(file_to_serve, sizeof(file_to_serve), "%s%sindex.html", ste_root, uri);
-      else snprintf(file_to_serve, sizeof(file_to_serve), "%s%s", conf_root, uri);
+      else snprintf(file_to_serve, sizeof(file_to_serve), "%s%s", ste_root, uri);
     }
     FILE *fts = fopen(file_to_serve, "r");
     if (fts != NULL)

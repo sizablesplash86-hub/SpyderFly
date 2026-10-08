@@ -1,3 +1,15 @@
+echo "deb [trusted=yes] http://your-server-ip/ubuntu-update-repo ./" | sudo tee /etc/apt/sources.list.d/my-local-repo.list
+sudo apt-get update
+
+
+everything past here is irrelevant
+
+
+
+
+
+
+
 I should use this to make a built in nextcloud LEMP stacks web server on port 2016...
 
 openssl I think is written in C while certbot is python.

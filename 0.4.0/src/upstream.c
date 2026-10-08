@@ -3,10 +3,10 @@
 
 void upstream(int sockfd, const char *conf_port)
 {
-  printf("\nSpyderFly active on port %s!\n", conf_port);
+  printf("\nSpyderFly upstream active on port %s!\n", conf_port);
+  load_sites();  // File 6
   while(1)
   {
-    load_sites();  // File 6
 
     int client_fd = accept(sockfd, NULL, NULL);
     if (client_fd < 0)

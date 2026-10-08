@@ -1,0 +1,14 @@
+MANIFEST.in
+README.rst
+pyproject.toml
+setup.py
+src/certbot_spyderfly/__init__.py
+src/certbot_spyderfly/py.typed
+src/certbot_spyderfly.egg-info/PKG-INFO
+src/certbot_spyderfly.egg-info/SOURCES.txt
+src/certbot_spyderfly.egg-info/dependency_links.txt
+src/certbot_spyderfly.egg-info/entry_points.txt
+src/certbot_spyderfly.egg-info/requires.txt
+src/certbot_spyderfly.egg-info/top_level.txt
+src/certbot_spyderfly/_internal/__init__.py
+src/certbot_spyderfly/_internal/entrypoint.py

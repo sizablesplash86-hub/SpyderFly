@@ -3,6 +3,8 @@
 
 void ip_bind(const char *conf_port)
 {
+  // modify this to be universal
+
   int port_num = atoi(conf_port);
   int sockfd = socket(AF_INET, SOCK_STREAM, 0);
   if (sockfd < 0)

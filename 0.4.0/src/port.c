@@ -23,7 +23,7 @@ void port(const char *conf)
     line[strcspn(line, "\r\n;")] =0;
     
     while (*port == ' ' || *port == '\t') port++;
-//    printf("Port %s found!\n\n", port);
+    printf("Port %s found!\n\n", port);
   }
 
   else
