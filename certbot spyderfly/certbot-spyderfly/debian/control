@@ -1,0 +1,12 @@
+Source: python3-certbot-spyderfly
+Section: python
+Priority: optional
+Maintainer: SizableSplash86
+Build-Depends: debhelper-compat (= 13), python3-setuptools, python3-all
+Standards-Version: 4.6.2
+
+Package: python3-certbot-spyderfly
+Architecture: all
+Depends: ${python3:Depends}, ${misc:Depends}, certbot, python3-zope.interface
+Description: Certbot authenticator and installer plugin for SpyderFly web server
+ Automates SSL certificate generation and deployment for SpyderFly domains.

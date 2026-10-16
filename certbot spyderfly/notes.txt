@@ -1,0 +1,8 @@
+# Run the build
+python -m build
+
+
+side note:
+The 'certbot_spyderfly._internal.entrypoint' plugin errored while loading: No module named 'certbot_spyderfly'. You may need to remove or update this plugin. The Certbot log will contain the full error details and this should be reported to the plugin developer. 
+
+
