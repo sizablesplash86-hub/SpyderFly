@@ -22,7 +22,10 @@ void upstream(int sockfd, const char *conf_port)
     sscanf(request, "%s %s %s", method, uri, protocol);
 
     char file_to_serve[STR_LEN * 2];
-    if (strcmp(uri, "/") == 0) snprintf(file_to_serve, sizeof(file_to_serve), "%s/index.html", conf_root);
+    if (strcmp(uri, "/") == 0)
+    {
+      snprintf(file_to_serve, sizeof(file_to_serve), "%s/index.html", conf_root);
+    }
     else 
     {
       size_t len = strlen(uri);
@@ -49,7 +52,7 @@ void upstream(int sockfd, const char *conf_port)
         "Connection: close\r\n\r\n"
         "<html><head><title>SpyderFly Site Not Found</title></head>"
         "<body><center><h1>SpyderFly Site Not Found</h1></center>"
-        "<center>DaemonCraft is a branch of SpyderFly. Visit <a href=\"https://spyderfly.sizablesplash.com/support/\">https://spyderfly.sizablesplash.com/support/</a> for support</center></body></html>";
+        "<center>Visit <a href=\"https://spyderfly.sizablesplash.com/support/\">https://spyderfly.sizablesplash.com/support/</a> for support</center></body></html>";
 
       write(client_fd, not_found, strlen(not_found));
     }

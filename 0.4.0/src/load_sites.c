@@ -15,6 +15,42 @@ void load_sites(void)
 
   struct dirent *entry;
 
+/*
+
+  if (strcmp(minecraft, "yes") == 0)  // for minecraft
+  {
+    int port_num = 25565;
+    int sockfd = socket(AF_INET, SOCK_STREAM, 0);
+    if (sockfd < 0)
+    {
+      perror("Socket creation failed");
+      return;
+    }
+
+    int opt = 1;
+    setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));
+
+    struct sockaddr_in addr;
+    addr.sin_family = AF_INET;
+    addr.sin_port = htons(port_num);
+    addr.sin_addr.s_addr = INADDR_ANY;
+
+    if (bind(sockfd, (struct sockaddr *)&addr, sizeof(addr)) < 0)
+    {
+      perror("Failed to bind address");
+      return;
+    }
+
+    if (listen(sockfd, 10) < 0)
+    {
+      perror("Listen failed");
+      return;
+    }
+    close(sockfd);
+  }
+
+*/
+
   while ((entry = readdir(dir)) != NULL)
   {
     if (entry->d_name[0] == '.') continue;
@@ -29,10 +65,12 @@ void load_sites(void)
       snprintf(full_path, sizeof(full_path), "%s/%s", dir_path, entry->d_name);
       printf("Found site config: %s\n", full_path);
 
+      if (strcmp(minecraft, "yes") == 0) web_mc(full_path);
+
       site_root(full_path);
       site_port(full_path);
       
-      site_domain(full_path);  // figure out this
+//      site_domain(full_path);  // figure out this
 
       printf("Creating site in %s on port %s\n", ste_root, ste_port);
 
