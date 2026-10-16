@@ -1,1 +1,0 @@
-SpyderFly plugin for Certbot

@@ -1,1 +1,0 @@
-"""Certbot SpyderFly internal implementation."""
