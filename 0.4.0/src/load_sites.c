@@ -65,7 +65,7 @@ void load_sites(void)
       snprintf(full_path, sizeof(full_path), "%s/%s", dir_path, entry->d_name);
       printf("Found site config: %s\n", full_path);
 
-      if (strcmp(minecraft, "yes") == 0) web_mc(full_path);
+//      if (strcmp(minecraft, "yes") == 0) web_mc(full_path);
 
       site_root(full_path);
       site_port(full_path);

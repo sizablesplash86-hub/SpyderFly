@@ -13,6 +13,12 @@ char minecraft[STR_LEN];
 
 int main()
 {
+  if (getuid() != 0)
+  {
+    printf("Error: This program must be run as root/sudo.\n");
+    return 1;
+  }
+
   // side note, figure out how to do a full global parser
   snprintf(conf, sizeof(conf), "/etc/spyderfly/config/spyderfly.conf");
   printf("\nWelcome to SpyderFly %s!\n\n", VERSION);
