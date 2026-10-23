@@ -8,8 +8,18 @@
 
 int start_spyderfly(void)
 {
-  printf("\nSee the recent log for what happens next\n\n");
-  spydrfly_log("Welcome to SpyderFly %s", SPYDERFLY_VERSION);  // File 3
+  snprintf(pid_conf, sizeof(pid_conf), "/run/spyderfly.pid");
+  FILE *rn = fopen("/run/spyderfly.pid", "w");
+  if (rn == NULL)
+  {
+    spydrfly_log("Failed to access PID file");
+    return 1;
+  }
+  fclose(rn);
+
+  spydrfly_log("Flushed PID file");
+
+  spydrfly_log("Welcome to SpyderFly %s!", SPYDERFLY_VERSION);  // File 3
 
   snprintf(conf, sizeof(conf), "/etc/spyderfly/config/spyderfly.conf");
   upstream_port();  // File 4

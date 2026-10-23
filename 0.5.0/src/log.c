@@ -11,7 +11,10 @@ void log_timestamp(FILE *log, const char *format, va_list args)
   time_t now = time(NULL);
   char *timestamp = ctime(&now);
   timestamp[strcspn(timestamp, "\n")] = 0;
-  
+
+  vprintf(format, args);
+  printf("\n");
+
   fprintf(log, "[%s] ", timestamp);
   vfprintf(log, format, args);
   fprintf(log, "\n");

@@ -4,7 +4,7 @@
 void upstream(int sockfd, const char *conf_port)
 {
   printf("\nSpyderFly upstream active on port %s!\n", conf_port);
-  load_sites();  // File 6
+//  load_sites();  // File 6
   while(1)
   {
 

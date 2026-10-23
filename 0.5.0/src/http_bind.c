@@ -35,6 +35,14 @@ void http_bind(void)
 
   spydrfly_log("Socket binded successfully");
 
+  if (listen(sockfd, 10) < 0)
+  {
+    spydrfly_log("Failed to listen");
+    return;
+  }
+
+  spydrfly_log("Socket begun listening");
+
   spydrfly_log("Running upstream...");
   upstream(sockfd);  // File 6
 

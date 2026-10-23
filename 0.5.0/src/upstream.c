@@ -17,7 +17,13 @@ void upstream(int sockfd)
     if (client_fd < 0)
     {
       spydrfly_log("Failed to accept socket");
-      continue;
+      return;
     }
+
+    char request[1024];
+    read(client_fd, request, sizeof(request) - 1);
+
+    spydrfly_log("Client accepted for the main upstream");
+    close(client_fd);
   }  // end of loop
 }
