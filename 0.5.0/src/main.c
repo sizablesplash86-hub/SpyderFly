@@ -18,7 +18,8 @@ char global_ste_domain[128];
 void list_commands(void)
 {
   printf(
-    "\n  --certbot       Post install SpyderFly certbot setup\n"
+    "\n"
+    "  --certbot       Post install SpyderFly certbot setup\n"
     "  --auto-config     Runs a built in auto config for sites\n\n"
 
     "  -s            Start SpyderFly web server\n"
@@ -39,7 +40,12 @@ int main(int argc, char *argv[])  // check C.13.7
 
   if (argc < 2) 
   {
-    printf("\nPlease enter sub command\nrun \"sudo spyderfly -h\" to see sub-commands\n\n");
+    
+    printf(
+      "\n  SpyderFly %s\n\n"
+      "\nPlease enter sub command\nrun \"sudo spyderfly -h\" to see sub-commands\n\n",
+      SPYDERFLY_VERSION
+    );
     return 0;
   }
 

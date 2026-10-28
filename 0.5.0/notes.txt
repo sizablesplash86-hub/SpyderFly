@@ -1,0 +1,24 @@
+do something like this:
+
+#if (NGX_FREEBSD)
+#include <nginx/ngx_freebsd_config.h>
+
+
+#elif (NGX_LINUX)
+#include <nginx/ngx_linux_config.h>
+
+
+#elif (NGX_SOLARIS)
+#include <nginx/ngx_solaris_config.h>
+
+
+#elif (NGX_DARWIN)
+#include <nginx/ngx_darwin_config.h>
+
+
+#elif (NGX_WIN32)
+#include <nginx/ngx_win32_config.h>
+
+
+#else /* POSIX */
+#include <nginx/ngx_posix_config.h>

@@ -56,7 +56,7 @@ void load_sites(void)
       if (strlen(cfg.site_root) == 0)
       {
         spydrfly_log("ERROR. Site %s does not contain root", site_name);
-        continue;
+        return;
       }
 
       spydrfly_log("checking for port...");
@@ -65,7 +65,7 @@ void load_sites(void)
       if (strlen(cfg.site_port) == 0)
       {
         spydrfly_log("ERROR. Site %s does not contain port number", site_name);
-        continue;
+        return;
       }
 
       spydrfly_log("Checking site domain...");
