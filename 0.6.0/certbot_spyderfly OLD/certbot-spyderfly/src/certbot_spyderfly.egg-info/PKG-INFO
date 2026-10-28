@@ -1,0 +1,16 @@
+Metadata-Version: 2.4
+Name: certbot-spyderfly
+Version: 0.1.0
+Summary: SpyderFly web server plugin for Certbot
+License-Expression: Apache-2.0
+Classifier: Development Status :: 3 - Alpha
+Classifier: Environment :: Plugins
+Classifier: Intended Audience :: System Administrators
+Classifier: Operating System :: POSIX :: Linux
+Classifier: Programming Language :: Python :: 3
+Requires-Python: >=3.10
+Description-Content-Type: text/x-rst
+Requires-Dist: certbot[spyderfly]>=0.1.0
+Dynamic: requires-dist
+
+SpyderFly plugin for Certbot

@@ -1,0 +1,97 @@
+#!/bin/sh
+set -e
+
+MAIN_DIR="/etc/spyderfly"
+SITES_DIR="/etc/spyderfly/enabled-sites"
+INDEX_DIR="/etc/spyderfly/index"
+CONF_DIR="/etc/spyderfly/config"
+DIS_SITE="/etc/spyderfly/disabled-sites"
+LOG_DIR="/etc/spyderfly/log"
+MAIN_CONF="/etc/spyderfly/spyderfly.conf"
+OUTPUT="/usr/sbin/spyderfly"
+SRVCE="/etc/systemd/system/spyderfly.service"
+BINRY="https://repo.sizablesplash.com/spyderfly/releases/v1.0.0/binary"
+
+# put the directory names here
+
+# leaving this here to be added to the pkg later
+echo "Welcome to the SpyderFly install!"
+
+echo "[*] Creating directories..."
+
+mkdir -p "$MAIN_DIR" "$INDEX_DIR" "$SITES_DIR" "$CONF_DIR" "$DIS_SITE" "$LOG_DIR"
+
+if ! ls $OUTPUT &> /dev/null; then
+    echo "[*] Binary detected! removing..."
+    rm -rf "$OUTPUT"
+else
+    echo "[*] Installing binary..."
+fi
+
+curl -sSL "$BINRY" -o "$OUTPUT"
+chmod +x "$OUTPUT"
+
+if ! ls $MAIN_DIR &> /dev/null; then
+    echo "[*] Creating main config..."
+    mkdir -p "$(dirname "$MAIN_CONF")"
+    cat << 'EOF' > "$MAIN_CONF"
+# this is the main config for SpyderFly
+# anything you change will be wiped in an update
+
+listen 80;
+root /etc/spyderfly/index/;
+
+include /etc/spyderfly/enabled-sites/*.conf;
+
+minecraft yes;
+EOF
+fi
+
+# this is the NGINX one, leaving here for notes purpose
+
+#[Unit]
+#Description=A high performance web server and a reverse proxy server
+#Documentation=man:nginx(8)
+#After=network-online.target remote-fs.target nss-lookup.target
+#Wants=network-online.target
+#ConditionFileIsExecutable=/usr/sbin/nginx
+
+#[Service]
+#Type=forking
+#PIDFile=/run/nginx.pid
+#ExecStartPre=/usr/sbin/nginx -t -q -g 'daemon on; master_process on;'
+#ExecStart=/usr/sbin/nginx -g 'daemon on; master_process on;'
+#ExecReload=/usr/sbin/nginx -g 'daemon on; master_process on;' -s reload
+#ExecStop=-/sbin/start-stop-daemon --quiet --stop --retry QUIT/5 --pidfile /run/nginx.pid
+#TimeoutStopSec=5
+#KillMode=mixed
+
+#[Install]
+#WantedBy=multi-user.target
+
+echo "[*] Creating daemon service..."
+
+mkdir -p "$(dirname "$SRVCE")"
+cat << 'EOF' > "$SRVCE"
+[Unit]
+Description=A high performance web server and a reverse proxy server
+Documentation=man:nginx(8)
+After=network-online.target remote-fs.target nss-lookup.target
+Wants=network-online.target
+ConditionFileIsExecutable=/usr/sbin/nginx
+
+[Service]
+Type=forking
+PIDFile=/run/nginx.pid
+ExecStartPre=/usr/sbin/nginx -t -q -g 'daemon on; master_process on;'
+ExecStart=/usr/sbin/nginx -g 'daemon on; master_process on;'
+ExecReload=/usr/sbin/nginx -g 'daemon on; master_process on;' -s reload
+ExecStop=-/sbin/start-stop-daemon --quiet --stop --retry QUIT/5 --pidfile /run/nginx.pid
+TimeoutStopSec=5
+KillMode=mixed
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+echo "SpyderFly installed! Thank you for choosing SpyderFly"

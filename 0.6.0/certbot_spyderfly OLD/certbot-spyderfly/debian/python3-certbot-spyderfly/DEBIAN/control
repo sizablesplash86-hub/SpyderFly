@@ -1,0 +1,10 @@
+Package: python3-certbot-spyderfly
+Version: 0.1.0-1
+Architecture: all
+Maintainer: SizableSplash86
+Installed-Size: 23
+Depends: python3-certbot, python3:any, certbot, python3-zope.interface
+Section: python
+Priority: optional
+Description: Certbot authenticator and installer plugin for SpyderFly web server
+ Automates SSL certificate generation and deployment for SpyderFly domains.

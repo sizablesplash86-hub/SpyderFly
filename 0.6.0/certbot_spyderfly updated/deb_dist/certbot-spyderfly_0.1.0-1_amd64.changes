@@ -1,0 +1,25 @@
+Format: 1.8
+Date: Mon, 26 Oct 2026 19:12:54 -0500
+Source: certbot-spyderfly
+Binary: python3-certbot-spyderfly
+Architecture: all
+Version: 0.1.0-1
+Distribution: unstable
+Urgency: low
+Maintainer: None <None>
+Changed-By: None <None>
+Description:
+ python3-certbot-spyderfly - SpyderFly plugin for Certbot
+Changes:
+ certbot-spyderfly (0.1.0-1) unstable; urgency=low
+ .
+   * source package automatically created by stdeb 0.10.0
+Checksums-Sha1:
+ 8db9360355099798e77afe4bf5cd2e7eff4ed151 5793 certbot-spyderfly_0.1.0-1_amd64.buildinfo
+ 871e8fc398e5bbf7ed6b95f83e8fa3c33c80ca10 3712 python3-certbot-spyderfly_0.1.0-1_all.deb
+Checksums-Sha256:
+ 7d760074f32a28fe1742300affb7c3382c723b44c6bd5ccb819597d331143ae9 5793 certbot-spyderfly_0.1.0-1_amd64.buildinfo
+ 475acff11ab78e0d0abe2ca24feb50016add3d47635e0a4e84140c353d7f3ff2 3712 python3-certbot-spyderfly_0.1.0-1_all.deb
+Files:
+ 0f4f6e415f4e9384ff7fc6071f4df68a 5793 python optional certbot-spyderfly_0.1.0-1_amd64.buildinfo
+ 250ff7f2216e8801ffd8a6ac2afaa5c9 3712 python optional python3-certbot-spyderfly_0.1.0-1_all.deb

@@ -1,0 +1,11 @@
+Package: python3-certbot-spyderfly
+Source: certbot-spyderfly
+Version: 0.1.0-1
+Architecture: all
+Maintainer: None <None>
+Installed-Size: 26
+Depends: python3-certbot, python3:any
+Section: python
+Priority: optional
+Homepage: None
+Description: SpyderFly plugin for Certbot

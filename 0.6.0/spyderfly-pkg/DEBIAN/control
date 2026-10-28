@@ -1,0 +1,8 @@
+Package: spyderfly
+Version: 0.5.1
+Section: utils
+Priority: optional
+Architecture: amd64
+Depends: python3-certbot python3   # change this to install the certbot
+Maintainer: sizablesplash86
+Description: Web server inspired by NGINX made easy

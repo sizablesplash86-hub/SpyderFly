@@ -1,0 +1,35 @@
+
+# How to do this again
+
+sudo rm -rf build/ deb_dist/ src/*.egg-info dist/
+python3 setup.py --command-packages=stdeb.command bdist_deb
+
+
+
+# installs it
+sudo dpkg -i deb_dist/python3-certbot-spyderfly_0.1.0-1_all.deb
+
+
+
+# to get cert
+sudo certbot certonly -i spyderfly -d test.sizablesplash.com
+
+
+
+# this file is supposed to go in /usr/local/bin/certbot as a mock one
+
+# SOF
+
+#!/bin/bash
+args=("$@")
+new_args=()
+for arg in "${args[@]}"; do
+    if [[ "$arg" == "--spyderfly" ]]; then
+        new_args+=("-i" "spyderfly" "--authenticator" "spyderfly")
+    else
+        new_args+=("$arg")
+    fi
+done
+exec /usr/bin/certbot "${new_args[@]}"
+
+# EOF
