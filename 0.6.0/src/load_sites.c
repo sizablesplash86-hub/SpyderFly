@@ -14,7 +14,7 @@ int load_sites(void)
 
   if (ste == NULL)
   {
-    spydrfly_log("Failed to open sites directory\n");
+    printf("Failed to open sites directory\n");
     return -1;
   }
 
@@ -27,7 +27,12 @@ int load_sites(void)
     char site_name[128];
     snprintf(site_name, sizeof(site_name), "%s", entry->d_name);
 
-    spydrfly_log("Checking %s\n", site_name);
+    printf(
+      "=============\n"
+      "Checking '%s'\n"
+      "=============\n", 
+      site_name
+    );
 
     size_t len = strlen(entry->d_name);
     if (len > 5 && strcmp(entry->d_name + len - 5, ".site") == 0)
@@ -39,10 +44,10 @@ int load_sites(void)
       char full_path[1024];
       snprintf(full_path, sizeof(full_path), "%s/%s", sites_dir, site_name);
 
-      if (ste_conf(full_path, site_name) < 0)
+      if (ste_conf(full_path, site_name) != 0)
       {
-        spydrfly_log("Failed to load site config for %s\n", site_name);
-        return 1;
+        printf("Failed to load site config for %s\n", site_name);
+        continue;
       }
     }
   }

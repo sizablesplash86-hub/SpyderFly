@@ -1,4 +1,4 @@
-/* Michael Kerrisk's The Linux Programming Interface */
+/* POSIX Headers */
 #include <unistd.h>     // system calls. introduced in Chapter 3
 #include <ctype.h>      // transform characters. Introduced in Chapter 4
 #include <dirent.h>     // directory operations. introduced in Chapter 18
@@ -13,7 +13,7 @@
 #include <openssl/ssl.h>  // core SSL/TLS context and connection handlers (libssl)
 #include <openssl/err.h>  // crypto and SSL error reporting functions (libcrypto)
 
-
+/* POSIX define */
 #define conf_file "/etc/nginx/config/spyderfly.conf"
 #define sites_dir "/etc/spyderfly/enabled-sites"
 #define logs "/etc/spyderfly/log"

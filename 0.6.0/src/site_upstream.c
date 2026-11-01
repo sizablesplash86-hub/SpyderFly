@@ -2,7 +2,7 @@
 
 int site_upstream(int sockfd, int addrlen, const char *site_root)
 {
-  spydrfly_log("Site active!\n");
+  printf("Site active!\n");
   while (1)
   {
 //    int clientfd = accept(sockfd, (struct sockaddr *)&addr, (socklen_t)&addrlen);
@@ -10,7 +10,7 @@ int site_upstream(int sockfd, int addrlen, const char *site_root)
 
     if (clientfd < 0)
     {
-      spydrfly_log("Failed to accept socket\n");
+      printf("Failed to accept socket\n");
       return -1;
     }
 
@@ -35,6 +35,8 @@ int site_upstream(int sockfd, int addrlen, const char *site_root)
     {
       snprintf(target_path, sizeof(target_path), "%s%s", site_root, path);
     }
+
+    printf("Requested path: '%s' -> Mapped to: '%s'\n", path, target_path);
 
     FILE *fts = fopen(target_path, "r");
     if (fts != NULL)

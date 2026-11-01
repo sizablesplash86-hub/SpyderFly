@@ -165,11 +165,16 @@ int parse_config(const char *fullpath, ServerConfig *config)
       {
         if (next_token(fp, token, sizeof(token)) && strcmp(token, ";") != 0)
         {
-          spydrfly_log("Syntax error: missing ';' after directive\n");
+          printf("Syntax error: missing ';' after directive\n");
           fclose(fp);
           return -1;
         }
       }
+    }
+    else
+    {
+      printf("Could not find server block\n");
+      return -1;
     }
   }
   fclose(fp);
@@ -183,7 +188,7 @@ int ste_conf(const char *full_path, const char *site_name)
   // Assuming you drop your block config into a test file
   if (parse_config(full_path, &cfg) == 0)
   {
-    spydrfly_log("Successfully Parsed Config:\n"
+    printf("Successfully Parsed Config:\n"
       "  Port:        %s\n"
       "  Root:        %s\n"
       "  Server Name: %s\n\n"
@@ -196,6 +201,12 @@ int ste_conf(const char *full_path, const char *site_name)
 
       cfg.fullchain, cfg.privkey, cfg.trusted_cert
     );
+  }
+
+  else
+  {
+    printf("Error in site config\n");
+    return -1;
   }
 
   char site_port[10];
@@ -214,41 +225,40 @@ int ste_conf(const char *full_path, const char *site_name)
   snprintf(dm_privkey, sizeof(dm_privkey), "%s", cfg.privkey);
   snprintf(dm_trusted_cert, sizeof(dm_trusted_cert), "%s", cfg.trusted_cert);
 
-/*
+  // Forks the site
+
   pid_t pid = fork();
 
   if (pid == 0)
   {
-    setsid();
+//    setsid();
 
     if (chdir(site_root) != 0)
     {
-      spydrfly_log("Failed to locate site root directory");
+      printf("Failed to locate site root directory\n");
       exit(1);
     }
 
-//    site_bind(site_port, site_root, site_domain);
+    printf("SpyderFly site worker active for %s\n", site_name);
 
-    spydrfly_log("SpyderFly site worker active for %s\n", site_name);
-*/
-    site_bind(site_port, site_root, site_domain, dm_fullchain, dm_privkey, dm_trusted_cert);
-/*
+    site_bind(site_name, site_port, site_root, site_domain, dm_fullchain, dm_privkey, dm_trusted_cert);
+
     exit(0);
   } 
 
   else
   {
-    spydrfly_log("Spawned SpyderFly site background process with PID: %d\n", pid);
+    printf("Spawned SpyderFly site background process with PID: %d\n", pid);
     
     FILE *f = fopen(pid_file, "a");
     if (f != NULL)
     {
       fprintf(f, "%d\n", pid);
       fclose(f);
-      spydrfly_log("Site PID saved to configuration.\n");
+      printf("Site PID saved to configuration.\n");
     }
-    else spydrfly_log("Failed to update site.conf with PID\n");
+    else printf("Failed to update site.conf with PID\n");
   }
-*/
+
   return 0;
 }

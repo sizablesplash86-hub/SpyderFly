@@ -5,11 +5,11 @@ int main(int argc, char *argv[])
 {
   if (getuid() != 0)
   {
-    spydrfly_log("SpyderFly requires sudo privileges\n");
+    printf("SpyderFly requires sudo privileges\n");
     return 0;
   }
 
-
+  
 
   if (argc < 2)
   {

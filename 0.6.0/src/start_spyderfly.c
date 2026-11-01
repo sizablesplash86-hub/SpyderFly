@@ -2,17 +2,17 @@
 
 int start_spyderfly(void)
 {
-  if (remove(pid_file) == 0) spydrfly_log("Removed PID file\n");
-  else spydrfly_log("Failed to remove PID file\n");
+  if (remove(pid_file) == 0) printf("Removed PID file\n");
+  else printf("Failed to remove PID file\n");
 
-  spydrfly_log("loading sites...\n");
+  printf("loading sites...\n");
   if (load_sites() != 0)
   {
-    spydrfly_log("Failed to load sites. Exiting now...\n");
+    printf("Failed to load sites. Exiting now...\n");
     return 1;
   }
 
-  spydrfly_log("Starting SpyderFly...\n");
+  printf("Starting SpyderFly...\n");
   while (1)
   {
     //

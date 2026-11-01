@@ -9,14 +9,14 @@ SSL_CTX *create_contex()
   ctx = SSL_CTX_new(method);
   if (!ctx)
   {
-    spydrfly_log("Unable to create SSL socket\n");
+    printf("Unable to create SSL socket\n");
     ERR_print_errors_fp(stderr);
     exit(EXIT_FAILURE);
   }
   return ctx;
 }
 
-int site_bind(const char *site_port, const char *site_root, const char *site_domain, const char *dm_fullchain, const char *dm_privkey, const char *dm_trusted_cert)
+int site_bind(const char *site_name, const char *site_port, const char *site_root, const char *site_domain, const char *dm_fullchain, const char *dm_privkey, const char *dm_trusted_cert)
 {
   int port_num = atoi(site_port);
   int opt = 1;
@@ -39,7 +39,7 @@ int site_bind(const char *site_port, const char *site_root, const char *site_dom
       exit(EXIT_FAILURE);
     }
   }
-  spydrfly_log("Passed the fullchain stuff\n");
+  printf("Passed the fullchain stuff\n");
 
   // Adds the privkey
   if (strcmp(dm_privkey, "") != 0)
@@ -50,18 +50,18 @@ int site_bind(const char *site_port, const char *site_root, const char *site_dom
       exit(EXIT_FAILURE);
     }
   }
-  spydrfly_log("Passed the privkey stuff\n");
+  printf("Passed the privkey stuff\n");
   // These two if statements were also obviously added for SSL
 
 
   // Creates socket
   if (sockfd < 0)
   {
-    spydrfly_log("Failed to create socket\n");
+    printf("Failed to create socket\n");
     return 1;
   }
 
-  spydrfly_log("Created socket\n");
+  printf("Created socket\n");
 
   setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));
 
@@ -71,19 +71,26 @@ int site_bind(const char *site_port, const char *site_root, const char *site_dom
 
   if (bind(sockfd, (struct sockaddr *)&addr, sizeof(addr)) < 0)
   {
-    spydrfly_log("Failed to bind port %s\n", port_num);
+    printf("Failed to bind port\n");
     return 1;
   }
 
-  spydrfly_log("Socket binded\n");
+  printf("Socket binded\n");
 
   if (listen(sockfd, 10) < 0)
   {
-    spydrfly_log("Failed to listen on port %s\n", site_port);
+    printf("Failed to listen on port\n");
     return 1;
   }
 
-  spydrfly_log("Listening on port %s\n", site_port);
+  printf("Listening on port %s\n", site_port);
+
+  FILE *fp = fopen("/etc/spyderfly/log/site_ports.log", "a");
+  if (fp != NULL)
+  {
+    fprintf(fp, "%s's port = %s\n", site_name, site_port);
+    fclose(fp);
+  }
 
   site_upstream(sockfd, addrlen, site_root);
 
