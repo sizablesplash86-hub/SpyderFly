@@ -1,5 +1,0 @@
-# Run the build
-python -m build
-
-# package build
-dpkg-buildpackage -us -uc -b
