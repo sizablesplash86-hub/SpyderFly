@@ -1,3 +1,9 @@
-reference-code/** linguist-detectable=false
-abandoned-code/0.2.0/headers/** linguist-detectable=false
-build/** linguist-detectable=false
+# Explicitly force recognition of your C codebase
+src/**/*.c linguist-language=C
+src/**/*.h linguist-language=C
+
+# Tell GitHub to ignore helper scripts and packages in the language bar
+scripts/** linguist-detectable=false
+spyderfly-pkg/** linguist-detectable=false
+"certbot spyderfly/**" linguist-detectable=false
+*.sh linguist-detectable=false
