@@ -16,13 +16,22 @@ SSL_CTX *create_contex()
   return ctx;
 }
 
-int site_bind(const char *site_name, const char *site_port, const char *site_root, const char *site_domain, const char *dm_fullchain, const char *dm_privkey, const char *dm_trusted_cert)
+int site_bind(
+  const char *site_name, 
+  const char *site_port, 
+  const char *site_root, 
+  const char *site_domain, 
+  const char *dm_fullchain, 
+  const char *dm_privkey, 
+  const char *dm_trusted_cert)
 {
   int port_num = atoi(site_port);
   int opt = 1;
   struct sockaddr_in addr;
-  int addrlen = sizeof(addr);  // added for SSL
+//  int addrlen = sizeof(addr);  // added for SSL
   int sockfd = socket(AF_INET, SOCK_STREAM, 0);
+
+/* Temporarily removed cuz this is meant to be HTTP
 
   // Initialize the OpenSSL Library
   SSL_load_error_strings();
@@ -52,7 +61,7 @@ int site_bind(const char *site_name, const char *site_port, const char *site_roo
   }
   printf("Passed the privkey stuff\n");
   // These two if statements were also obviously added for SSL
-
+*/
 
   // Creates socket
   if (sockfd < 0)
@@ -92,7 +101,8 @@ int site_bind(const char *site_name, const char *site_port, const char *site_roo
     fclose(fp);
   }
 
-  site_upstream(sockfd, addrlen, site_root);
+//  site_upstream(sockfd, addrlen, site_root);
+  site_upstream(sockfd, site_root);
 
   close(sockfd);
   return 0;

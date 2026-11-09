@@ -1,6 +1,7 @@
 #include "core.h"
 
-int site_upstream(int sockfd, int addrlen, const char *site_root)
+//int site_upstream(int sockfd, int addrlen, const char *site_root)
+int site_upstream(int sockfd, const char *site_root)
 {
   printf("Site active!\n");
   while (1)

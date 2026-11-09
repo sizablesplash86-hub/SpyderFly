@@ -1,5 +1,6 @@
+src/nginx-testing/
 tests/
 reference-code/
 abandoned-code/
-build/
+.vscode/
 0.6.0/

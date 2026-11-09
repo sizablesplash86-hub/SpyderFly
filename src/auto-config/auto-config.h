@@ -2,6 +2,11 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <sys/stat.h>
+#include <ifaddrs.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+
 #define SITES "/etc/spyderfly/enabled-sites"
 #define DIS_SITES "/etc/spyderfly/disabled-sites"
 #define TEST "sudo spyderfly -t"
@@ -26,7 +31,7 @@ int run_directory(void);
 int run_http(void);
 int run_https(void);
 
-int create_conf(void);
+int created(void);
 
 extern char lan_ip[256];
 

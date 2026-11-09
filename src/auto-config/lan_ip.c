@@ -1,9 +1,5 @@
 #include "auto-config.h"
 
-#include <ifaddrs.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-
 void ip(void)
 {
   snprintf(lan_ip, sizeof(lan_ip), "127.0.0.1");

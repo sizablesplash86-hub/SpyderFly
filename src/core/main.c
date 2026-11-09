@@ -1,7 +1,5 @@
 #include "core.h"
 
-char cmd[16];
-
 int main(int argc, char *argv[])
 {
   if (getuid() != 0)
@@ -9,8 +7,6 @@ int main(int argc, char *argv[])
     printf("SpyderFly requires sudo privileges\n");
     return 0;
   }
-
-  snprintf(cmd, sizeof(cmd), "%s", argv[1]);
 
   if (argc < 2)
   {
@@ -69,5 +65,5 @@ int main(int argc, char *argv[])
     return 0;
   }
 
-  else printf("Error! \"%s\" not valid command\n", argv[1]);
+  else printf("Error! '%s' not valid sub-command\n", argv[1]);
 }

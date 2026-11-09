@@ -2,7 +2,7 @@
 SpyderFly is a custom web server I started developing after I wanted to try Pingora. I had a thought: "This is like developing my own web server"... Then I began working. The goal of SpyderFly is to create an easy to manage web server. Worry about creating your website, not managing the web server. It's inspired by NGINX and meant to work in a similar way. I started the SpyderFly project on September 12, 2026.
 
 # Install
-SpyderFly has a repository you can add. Currently no support for other Distros than Debian/Ubuntu systems. It is possible, I'm just used to Debian and that comes first.
+SpyderFly has a repository you can add. Currently no support for other Distros than Debian/Ubuntu systems. It is possible, I'm just used to Debian and that comes first. When released, SpyderFly for Debian will be the priority and will come first. RHEL & Arch will get support eventually. Other Distros like Slackware, OpenSUSE, Gentoo, etc. may happen some day. FreeBSD may happen some day. Unlikely Windows support will happen ever, but never say never. If I get bored enough, it'll happen.
 
 ```
 curl -fsSL https://repo.sizablesplash.com/pubkey.gpg | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/sizablesplash.gpg

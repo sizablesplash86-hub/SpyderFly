@@ -3,7 +3,6 @@
 #include <stdlib.h>   // general utils. introduced chapter 21 p.533
 #include <string.h>   // chapter 13 p.277
 #include <ctype.h>      // transform characters. Introduced in Chapter 23.5
-//#include <stddef.h>   // standard definitions like size_t and NULL chapter 21.4 p.535
 
 /* OS headers */
 #include "os.h"
@@ -22,6 +21,8 @@ int start_spyderfly(void);
 int load_sites(void);
 int ste_conf(const char *full_path, const char *site_name);
 int site_bind(const char *site_name, const char *site_port, const char *site_root, const char *site_domain, const char *dm_fullchain, const char *dm_privkey, const char *dm_trusted_cert);
-int site_upstream(int sockfd, int addrlen, const char *site_root);
+
+//int site_upstream(int sockfd, int addrlen, const char *site_root);
+int site_upstream(int sockfd, const char *site_root);
 
 void spydrfly_log(const char *format, ...);
