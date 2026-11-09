@@ -1,0 +1,8 @@
+Metadata-Version: 2.4
+Name: certbot-spyderfly
+Version: 0.1.0
+Summary: SpyderFly plugin for Certbot
+Requires-Dist: certbot
+Requires-Dist: zope.interface
+Dynamic: requires-dist
+Dynamic: summary

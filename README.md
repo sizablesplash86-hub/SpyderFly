@@ -3,12 +3,16 @@ SpyderFly is a custom web server I started developing after I wanted to try Ping
 
 # Install
 SpyderFly has a repository you can add. Currently no support for other Distros than Debian/Ubuntu systems. It is possible, I'm just used to Debian and that comes first.
+
 ```
 curl -fsSL https://repo.sizablesplash.com/pubkey.gpg | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/sizablesplash.gpg
 echo "deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/sizablesplash.gpg] https://repo.sizablesplash.com/spyderfly stable main" | sudo tee /etc/apt/sources.list.d/spyderfly.list
 sudo apt update
 sudo apt install spyderfly
 ```
+
+SpyderFly is available for anyone currently to clone the repo and compile yourself. I added a shell script called `self-run.sh` Just run it (assuming you have OpenSSL, GCC, & build essentials installed) and it'll create the directories and output the binary.
+
 
 # Other Distros
 As far as I'm aware, SpyderFly should work on other Distros, but I have not tested it. Untill I setup a packager for them, you can install it manually. The code should be portable.

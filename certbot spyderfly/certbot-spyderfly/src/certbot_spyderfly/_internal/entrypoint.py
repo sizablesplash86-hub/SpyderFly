@@ -1,51 +1,44 @@
-""" Entry point for SpyderFly Plugin """
-
-from certbot.plugins import common
 from certbot import interfaces
-from zope.interface import implementer
-import os
-import logging
+from certbot.plugins import common
 
-logger = logging.getLogger(__name__)
+class SpyderFlyConfigurator(common.Plugin, interfaces.IAuthenticator, interfaces.IInstaller):
+    description = "SpyderFly Web Server plugin"
 
-@implementer(interfaces.IConfigurator)
-class Configurator(common.Plugin, interfaces.Configurator):
-    description = "SpyderFly Web Server Certbot Plugin"
-
-    def more_info(self):
-        return "Automates obtaining and deploying SSL certificates for the SpyderFly web server."
+    @classmethod
+    def add_parser_arguments(cls, add):
+        add("conf-path", default="/home/daemoncraft/spyderfly.conf", help="Path to SpyderFly configuration file.")
 
     def prepare(self):
-        if not os.path.exists("/etc/spyderfly"):
-            logger.warning("SpyderFly config directory /etc/spyderfly not found.")
+        pass
+
+    def more_info(self):
+        return "A Certbot plugin for the custom SpyderFly C web server."
 
     def get_chall_pref(self, domain):
-        return []
+        from certbot.plugins import challenges
+        return [challenges.HTTP01]
 
-    def perform(self, achalls):
+    def perform(self, achallenges):
         responses = []
-        for achall in achalls:
-            response = achall.response(achall.account.key)
+        for achall in achallenges:
+            response = achall.gen_response(0)
+            token_path = f"/home/daemoncraft/.well-known/acme-challenge/{achall.chall.encode('token')}"
+            import os
+            os.makedirs(os.path.dirname(token_path), exist_ok=True)
+            with open(token_path, "w") as f:
+                f.write(response.key_authorization)
             responses.append(response)
         return responses
 
-    def cleanup(self, achalls):
-        pass
+    def cleanup(self, achallenges):
+        import os
+        for achall in achallenges:
+            token_path = f"/home/daemoncraft/.well-known/acme-challenge/{achall.chall.encode('token')}"
+            if os.path.exists(token_path):
+                os.remove(token_path)
 
     def deploy_cert(self, domain, cert_path, key_path, chain_path, fullchain_path):
-        target_dir = f"/etc/letsencrypt/live/{domain}"
-        os.makedirs(target_dir, exist_ok=True)
-        
-        target_fullchain = os.path.join(target_dir, "fullchain.pem")
-        target_privkey = os.path.join(target_dir, "privkey.pem")
-
-        with open(fullchain_path, "r") as src, open(target_fullchain, "w") as dst:
-            dst.write(src.read())
-
-        with open(key_path, "r") as src, open(target_privkey, "w") as dst:
-            dst.write(src.read())
-
-        logger.info(f"Successfully deployed SSL certificates for {domain} to {target_dir}")
+        pass
 
     def enhance(self, domain, enhancement, options=None):
         pass
@@ -53,16 +46,15 @@ class Configurator(common.Plugin, interfaces.Configurator):
     def supported_enhancements(self):
         return []
 
-    def save(self, title=None, summarize=True):
+    def get_all_names(self):
+        return []
+
+    def save(self, title=None, message=None):
         pass
 
-    def rollback_checkpoints(self, flow=None):
-        pass
-
-    def recovery_routine(self, flow=None):
+    def rollback(self, checkpoints):
         pass
 
     def restart(self):
-        pass
-
-ENTRYPOINT = Configurator
+        import subprocess
+        subprocess.run(["pkill", "-HUP", "spyderfly"], check=False)

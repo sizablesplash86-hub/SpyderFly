@@ -1,0 +1,9 @@
+# update server guide with
+
+```sudo apt install python3-certbot```
+
+
+
+# if running standalone, do not have the domain proxied, and you'll need a TXT record added.
+
+```sudo certbot certonly --manual --preferred-challenges dns -d test.sizablesplash.com```

@@ -1,1 +1,0 @@
-echo "Welcome to the SpyderFly certbot plugin!"

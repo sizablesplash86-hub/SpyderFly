@@ -1,0 +1,31 @@
+# Maintainer: Trevor Bergstrom <trevor@sizablesplash.com>
+pkgname=spyderfly
+pkgver=0.6.0
+pkgrel=1
+pkgdesc="A high-performance custom C web server and reverse proxy"
+arch=('x86_64')
+url="https://sizablesplash.com"
+license=('MIT')
+depends=('openssl' 'systemd-libs')
+optdepends=('certbot: SSL certificate automation')
+backup=("etc/spyderfly/spyderfly.conf")
+source=("$pkgname-$pkgver.tar.gz")
+sha256sums=('SKIP') # Replace with actual checksum in production
+
+build() {
+    cd "$pkgname-$pkgver"
+    make
+}
+
+package() {
+    cd "$pkgname-$pkgver"
+    
+    # Install binary
+    install -Dm755 src/spyderfly "$pkgdir/usr/bin/spyderfly"
+    
+    # Install systemd service
+    install -Dm644 spyderfly.service "$pkgdir/usr/lib/systemd/system/spyderfly.service"
+    
+    # Create configuration directories
+    install -dm755 "$pkgdir/etc/spyderfly/sites-available"
+}

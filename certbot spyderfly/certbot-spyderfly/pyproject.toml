@@ -1,27 +1,15 @@
 [build-system]
-requires = ["setuptools"]
+requires = ["setuptools>=61.0.0", "wheel", "stdeb"]
 build-backend = "setuptools.build_meta"
 
-[project]
-name = "certbot-spyderfly"
-dynamic = ["version", "dependencies"]
-description = "SpyderFly web server plugin for Certbot"
-readme = "README.rst"
-license = "Apache-2.0"
-requires-python = ">=3.10"
-classifiers = [
-    "Development Status :: 3 - Alpha",
-    "Environment :: Plugins",
-    "Intended Audience :: System Administrators",
-    "Operating System :: POSIX :: Linux",
-    "Programming Language :: Python :: 3",
-]
 
-[project.entry-points."certbot.plugins"]
-spyderfly = "certbot_spyderfly._internal.entrypoint:ENTRYPOINT"
+#[project]
+#name = "certbot-spyderfly"
+#version = "0.1.0"
+#description = "SpyderFly plugin for Certbot"
+#dependencies = [
+#    "certbot",
+#]
 
-[tool.setuptools]
-package-dir = {"" = "src"}
-
-[tool.setuptools.packages.find]
-where = ["src"]
+#[project.entry-points."certbot.plugins"]
+#spyderfly = "certbot_spyderfly._internal.entrypoint:SpyderFlyConfigurator"

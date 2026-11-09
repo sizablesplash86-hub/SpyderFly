@@ -1,0 +1,28 @@
+Format: 1.8
+Date: Sun, 08 Nov 2026 12:09:12 -0600
+Source: certbot-spyderfly
+Architecture: source
+Version: 0.1.0-1
+Distribution: unstable
+Urgency: low
+Maintainer: None <None>
+Changed-By: None <None>
+Changes:
+ certbot-spyderfly (0.1.0-1) unstable; urgency=low
+ .
+   * source package automatically created by stdeb 0.10.0
+Checksums-Sha1:
+ 152fd3c8963ada4514bd4dcb893b36621e349159 905 certbot-spyderfly_0.1.0-1.dsc
+ 5ef6cb3c26379d25a8e2542eda7a7bb4f43acdf1 2480 certbot-spyderfly_0.1.0.orig.tar.gz
+ b240cf3d520a9b89b8fdcfcc48d2412770e7863d 892 certbot-spyderfly_0.1.0-1.debian.tar.xz
+ 6110d4fa79b129191d9c5ca408afb1d41b61ef98 6153 certbot-spyderfly_0.1.0-1_source.buildinfo
+Checksums-Sha256:
+ d2eeca5571db8581cfdb3a987dbcb6e1a87b53919d567e454768a58c0d363884 905 certbot-spyderfly_0.1.0-1.dsc
+ 95ed548230ab280af316f45b379ed44400d2e4ffc5b61f0ea672ea041fc6458d 2480 certbot-spyderfly_0.1.0.orig.tar.gz
+ 7dc5badcb869b9c26bb23c6c4ae482cf5e832ac8e039728757180ecd5474fde5 892 certbot-spyderfly_0.1.0-1.debian.tar.xz
+ 5fda1fd17c57b2bbf4e67b6dd5de18e367c691308b964d02c7aee59f6999dace 6153 certbot-spyderfly_0.1.0-1_source.buildinfo
+Files:
+ 6373df8ec4b0813f210f98afc778ec24 905 python optional certbot-spyderfly_0.1.0-1.dsc
+ 59b14775bb3162b1ee08d7fc35eec276 2480 python optional certbot-spyderfly_0.1.0.orig.tar.gz
+ 266e844a9776e233155d6c8ba70ea22f 892 python optional certbot-spyderfly_0.1.0-1.debian.tar.xz
+ 8d440e951740a6bdd48359044cea21ae 6153 python optional certbot-spyderfly_0.1.0-1_source.buildinfo

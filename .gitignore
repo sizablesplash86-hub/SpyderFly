@@ -1,8 +1,5 @@
+tests/
 reference-code/
-abandoned-code/0.2.0/headers/
+abandoned-code/
 build/
-'certbot spyderfly'/
-spyderfly-pkg/
-0.6.0/certbot-stuff/
-0.6.0/tests/
-0.6.0/certbot spyderfly/certbot-spyderfly/src/certbot_spyderfly.egg-info/
+0.6.0/

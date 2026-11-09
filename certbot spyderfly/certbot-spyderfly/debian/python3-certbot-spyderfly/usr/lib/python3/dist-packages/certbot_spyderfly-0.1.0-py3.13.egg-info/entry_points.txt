@@ -1,2 +1,0 @@
-[certbot.plugins]
-spyderfly = certbot_spyderfly._internal.entrypoint:ENTRYPOINT

@@ -1,1 +1,2 @@
-certbot[spyderfly]>=0.1.0
+certbot
+zope.interface
