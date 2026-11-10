@@ -1,5 +1,6 @@
-#include "core.h"
+#include "../spyderfly.h"
 
+/*
 SSL_CTX *create_contex()
 {
   const SSL_METHOD *method;
@@ -15,6 +16,7 @@ SSL_CTX *create_contex()
   }
   return ctx;
 }
+*/
 
 int site_bind(
   const char *site_name, 

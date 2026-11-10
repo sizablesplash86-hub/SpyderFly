@@ -1,4 +1,4 @@
-#include "core.h"
+#include "../spyderfly.h"
 
 void log_timestamp(FILE *log, const char *format, va_list args)
 {
@@ -24,7 +24,7 @@ void spydrfly_log(const char *format, ...)
   char date[128];
   strftime(date, sizeof(date), "%Y-%m-%d", info);
 
-  snprintf(log_file, sizeof(log_file), "%s/%s.log", logs, date);
+  snprintf(log_file, sizeof(log_file), "%s/%s.log", spydrfly_logs, date);
   FILE *log = fopen(log_file, "a");
   if (log == NULL)
   {

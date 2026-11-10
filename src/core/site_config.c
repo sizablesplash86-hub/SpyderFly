@@ -1,4 +1,4 @@
-#include "core.h"
+#include "../spyderfly.h"
 
 typedef struct {
     char domain[128];

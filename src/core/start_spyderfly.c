@@ -1,4 +1,4 @@
-#include "core.h"
+#include "../spyderfly.h"
 
 int start_spyderfly(void)
 {
