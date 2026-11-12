@@ -15,6 +15,8 @@ int start_spyderfly(void)
   printf("Starting SpyderFly...\n");
   while (1)
   {
-    //
+    printf("[*] Main loop is here\n");
+    
+    sleep(5);
   }
 }

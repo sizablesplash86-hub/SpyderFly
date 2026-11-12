@@ -1,3 +1,5 @@
+// unused right now
+
 #include "../spyderfly.h"
 
 void log_timestamp(FILE *log, const char *format, va_list args)

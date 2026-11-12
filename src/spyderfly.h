@@ -4,6 +4,9 @@
 #include "auto-config/auto-config.h"
 #include "mc/mc.h"
 
+#define SPYDRFLY_CURR_VERS "0.6.0"
+#define REPO_URL "https://api.github.com/repos/sizablesplash86-hub/spyderfly/releases/latest"
+
 /* Commands */
 int start_spyderfly(void);
 int load_sites(void);

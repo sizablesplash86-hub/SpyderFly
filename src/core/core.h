@@ -6,8 +6,6 @@
 #include <time.h>     // Chapter 26.3
 #include <stdarg.h>   // Technically POSIX, but mentioned in 26.1
 
-#define VERSION "0.6.0"
-
 /* HTML Stuff */
 #define HEADER "HTTP/1.1 200 OK\r\nContent-Type: text/html; charset=UTF-8\r\n\r\n"
 #define NOT_FOUND "HTTP/1.1 404 Not Found\r\n" "Content-Type: text/html; charset=UTF-8\r\n" "Connection: close\r\n\r\n" "<html>\n  <head>\n    <title>SpyderFly Site Not Found</title>\n  </head>\n\n" "  <body>\n    <center><h1>SpyderFly Site Not Found</h1></center>\n" "    <hr>\n" "    <center>Visit <a href=\"https://spyderfly.sizablesplash.com/support/\">https://spyderfly.sizablesplash.com/support/</a> for support</center>\n  </body>\n</html>"

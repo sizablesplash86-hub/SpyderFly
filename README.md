@@ -11,7 +11,7 @@ sudo apt update
 sudo apt install spyderfly
 ```
 
-SpyderFly is available for anyone currently to clone the repo and compile yourself. I added a shell script called `self-run.sh` Just run it (assuming you have OpenSSL, GCC, & build essentials installed) and it'll create the directories and output the binary.
+SpyderFly is available for anyone currently to clone the repo and compile yourself. I added a shell script called `self-run.sh` Just run it (assuming you have OpenSSL, GCC, & build essentials installed) and it'll create the directories and output the binary. The script will not create the daemon service.
 
 
 # Other Distros
