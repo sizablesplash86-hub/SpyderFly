@@ -1,13 +1,14 @@
 #include "core/core.h"
 #include "os/os.h"
 #include "lib/lib.h"
-#include "auto-config/auto-config.h"
+#include "misc/misc.h"
 #include "mc/mc.h"
 
 #define SPYDRFLY_CURR_VERS "0.6.0"
 #define REPO_URL "https://api.github.com/repos/sizablesplash86-hub/spyderfly/releases/latest"
 
 /* Commands */
+int update(void);
 int start_spyderfly(void);
 int load_sites(void);
 int ste_conf(const char *full_path, const char *site_name);

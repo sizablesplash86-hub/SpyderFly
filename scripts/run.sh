@@ -1,3 +1,3 @@
 sudo rm /usr/sbin/spyderfly
-gcc src/core/*.c src/auto-config/*.c -o /usr/sbin/spyderfly -lssl -lcrypto
+gcc $(find src/ -name "*.c") -o /usr/sbin/spyderfly -lssl -lcrypto -lcurl
 sudo spyderfly

@@ -2,12 +2,6 @@
 
 int main(int argc, char *argv[])
 {
-  if (getuid() != 0)
-  {
-    printf("SpyderFly requires sudo privileges\n");
-    return 0;
-  }
-
   if (argc < 2)
   {
     printf("\nPlease enter a sub command. Run \"sudo spyderfly -h\" to see sub-commands\n\n");
@@ -30,12 +24,14 @@ int main(int argc, char *argv[])
   {
     printf("\nSpyderFly commands:\n\n"
       "  --certbot        post install Certbot installation\n"
-      "  --auto-config    auto config for sites\n\n"
+      "  --auto-config    auto config for sites\n"
+      "\n"
       "  -h    lists commands\n"
       "  -s    start SpyderFly\n"
       "  -t    test current config\n"
       "  -r    reload sites\n"
-      "  -v    version\n\n"
+      "  -v    version\n"
+      "\n"
     );
     return 0;
   }
@@ -60,7 +56,7 @@ int main(int argc, char *argv[])
       "Copyright (c) SizableSplash\n"
       "Visit https://spyderfly.sizablesplash.com for releases and support\n"
       "Thank you for choosing SpyderFly!\n",
-      VERSION
+      SPYDRFLY_CURR_VERS
     );
     return 0;
   }
