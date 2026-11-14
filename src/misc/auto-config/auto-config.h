@@ -44,4 +44,5 @@ extern char domain[512];
 extern char start[5];
 extern char manual[10];
 extern char http_https[10];
+extern char prox[512];
 extern char list[10];

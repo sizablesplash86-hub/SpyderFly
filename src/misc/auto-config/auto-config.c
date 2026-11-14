@@ -11,6 +11,7 @@ char domain[512];
 char start[5];
 char manual[10];
 char http_https[10];
+char prox[512];
 char list[10];
 
 int auto_config(void)
