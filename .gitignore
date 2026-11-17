@@ -1,6 +1,7 @@
 nginx-testing/
 tests/
 reference-code/
+cython-example/
 abandoned-code/
 .vscode/
 0.6.0/

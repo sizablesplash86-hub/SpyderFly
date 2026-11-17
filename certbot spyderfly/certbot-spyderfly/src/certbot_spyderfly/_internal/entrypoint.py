@@ -1,12 +1,14 @@
+import zope.interface
 from certbot import interfaces
 from certbot.plugins import common
 
-class SpyderFlyConfigurator(common.Plugin, interfaces.IAuthenticator, interfaces.IInstaller):
+@zope.interface.implementer(interfaces.IAuthenticator, interfaces.IInstaller)
+class SpyderFlyConfigurator(common.Plugin):
     description = "SpyderFly Web Server plugin"
 
     @classmethod
     def add_parser_arguments(cls, add):
-        add("conf-path", default="/home/daemoncraft/spyderfly.conf", help="Path to SpyderFly configuration file.")
+        add("conf-path", default="/etc/spyderfly/spyderfly.conf", help="Path to SpyderFly configuration file.")
 
     def prepare(self):
         pass
@@ -22,6 +24,8 @@ class SpyderFlyConfigurator(common.Plugin, interfaces.IAuthenticator, interfaces
         responses = []
         for achall in achallenges:
             response = achall.gen_response(0)
+
+            # figure out what this is
             token_path = f"/home/daemoncraft/.well-known/acme-challenge/{achall.chall.encode('token')}"
             import os
             os.makedirs(os.path.dirname(token_path), exist_ok=True)
@@ -33,6 +37,8 @@ class SpyderFlyConfigurator(common.Plugin, interfaces.IAuthenticator, interfaces
     def cleanup(self, achallenges):
         import os
         for achall in achallenges:
+
+            # figure out what this is
             token_path = f"/home/daemoncraft/.well-known/acme-challenge/{achall.chall.encode('token')}"
             if os.path.exists(token_path):
                 os.remove(token_path)

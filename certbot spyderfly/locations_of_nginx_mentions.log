@@ -1,0 +1,66 @@
+# this is to try and add the plugin
+
+
+
+/usr/lib/python3/dist-packages/certbot/tests/testdata/sample-renewal.conf:18:nginx_ctl = nginx
+/usr/lib/python3/dist-packages/certbot/tests/testdata/sample-renewal.conf:31:nginx = False
+/usr/lib/python3/dist-packages/certbot/tests/testdata/sample-renewal.conf:32:nginx_server_root = /etc/nginx
+/usr/lib/python3/dist-packages/certbot/tests/testdata/sample-renewal-ec.conf:21:nginx_ctl = nginx
+/usr/lib/python3/dist-packages/certbot/tests/testdata/sample-renewal-ec.conf:34:nginx = False
+/usr/lib/python3/dist-packages/certbot/tests/testdata/sample-renewal-ec.conf:35:nginx_server_root = /etc/nginx
+/usr/lib/python3/dist-packages/certbot/tests/testdata/sample-renewal-ancient.conf:18:nginx_ctl = nginx
+/usr/lib/python3/dist-packages/certbot/tests/testdata/sample-renewal-ancient.conf:31:nginx = False
+/usr/lib/python3/dist-packages/certbot/tests/testdata/sample-renewal-ancient.conf:32:nginx_server_root = /etc/nginx
+/usr/lib/python3/dist-packages/certbot/tests/testdata/sample-renewal-deprecated-option.conf:12:authenticator = nginx
+/usr/lib/python3/dist-packages/certbot/tests/testdata/sample-renewal-deprecated-option.conf:13:installer = nginx
+/usr/lib/python3/dist-packages/certbot/_internal/constants.py:114:    nginx=False,
+/usr/lib/python3/dist-packages/certbot/_internal/constants.py:232:"""Path to the nginx ssl_dhparams file found in the Certbot distribution."""
+/usr/lib/python3/dist-packages/certbot/_internal/plugins/selection.py:263:        selected_configurator = config.nginx or config.apache
+/usr/lib/python3/dist-packages/certbot/_internal/plugins/selection.py:266:        interactively_selected = req_auth is None and authenticator.name in ("nginx", "apache")
+/usr/lib/python3/dist-packages/certbot/_internal/plugins/selection.py:304:    if config.nginx:
+/usr/lib/python3/dist-packages/certbot/_internal/plugins/selection.py:305:        req_inst = set_configurator(req_inst, "nginx")
+/usr/lib/python3/dist-packages/certbot/_internal/plugins/selection.py:306:        req_auth = set_configurator(req_auth, "nginx")
+/usr/lib/python3/dist-packages/certbot/_internal/tests/cli_test.py:170:        out = self._help_output(['-h', 'nginx'])
+/usr/lib/python3/dist-packages/certbot/_internal/tests/cli_test.py:171:        if "nginx" in PLUGINS:
+/usr/lib/python3/dist-packages/certbot/_internal/tests/cli_test.py:173:            assert "--nginx-ctl" in out
+/usr/lib/python3/dist-packages/certbot/_internal/tests/cli_test.py:178:        if "nginx" in PLUGINS:
+/usr/lib/python3/dist-packages/certbot/_internal/tests/cli_test.py:181:            assert "(the certbot nginx plugin is not" in out
+/usr/lib/python3/dist-packages/certbot/_internal/tests/plugins/selection_test.py:229:            "nginx": self._setupMockPlugin("nginx"),
+/usr/lib/python3/dist-packages/certbot/_internal/tests/plugins/selection_test.py:244:        inst, auth = self._runWithArgs("certonly --nginx")
+/usr/lib/python3/dist-packages/certbot/_internal/tests/plugins/selection_test.py:245:        assert inst.name == "nginx"
+/usr/lib/python3/dist-packages/certbot/_internal/tests/plugins/selection_test.py:246:        assert auth.name == "nginx"
+/usr/lib/python3/dist-packages/certbot/_internal/tests/plugins/selection_test.py:262:        inst, auth = self._runWithArgs("certonly -a nginx -i nginx")
+/usr/lib/python3/dist-packages/certbot/_internal/tests/plugins/selection_test.py:263:        assert inst.name == "nginx"
+/usr/lib/python3/dist-packages/certbot/_internal/tests/plugins/selection_test.py:264:        assert auth.name == "nginx"
+/usr/lib/python3/dist-packages/certbot/_internal/tests/plugins/selection_test.py:279:        inst, auth = self._runWithArgs("certonly -a nginx")
+/usr/lib/python3/dist-packages/certbot/_internal/tests/plugins/selection_test.py:281:        assert auth.name == "nginx"
+/usr/lib/python3/dist-packages/certbot/_internal/tests/plugins/selection_test.py:282:        inst, auth = self._runWithArgs("certonly -a nginx -i none")
+/usr/lib/python3/dist-packages/certbot/_internal/tests/plugins/selection_test.py:284:        assert auth.name == "nginx"
+/usr/lib/python3/dist-packages/certbot/_internal/tests/main_test.py:341:        self._call('certonly --nginx -d example.com'.split())
+/usr/lib/python3/dist-packages/certbot/_internal/tests/main_test.py:356:        self._call('certonly --nginx -d example.com --dry-run'.split())
+/usr/lib/python3/dist-packages/certbot/_internal/tests/main_test.py:569:            authenticator = nginx
+/usr/lib/python3/dist-packages/certbot/_internal/tests/main_test.py:570:            installer = nginx
+/usr/lib/python3/dist-packages/certbot/_internal/tests/main_test.py:606:        named_mock.name = 'nginx'
+/usr/lib/python3/dist-packages/certbot/_internal/tests/main_test.py:612:        self._call('--nginx'.split())
+/usr/lib/python3/dist-packages/certbot/_internal/tests/main_test.py:637:        new_config['renewalparams']['authenticator'] = 'nginx'
+/usr/lib/python3/dist-packages/certbot/_internal/tests/main_test.py:638:        new_config['renewalparams']['installer'] = 'nginx'
+/usr/lib/python3/dist-packages/certbot/_internal/tests/main_test.py:719:        assert new_config['renewalparams']['authenticator'] == 'nginx'
+/usr/lib/python3/dist-packages/certbot/_internal/tests/main_test.py:737:            installer = nginx
+/usr/lib/python3/dist-packages/certbot/_internal/tests/main_test.py:750:        named_mock.name = 'nginx'
+/usr/lib/python3/dist-packages/certbot/_internal/tests/main_test.py:755:        new_config = self._call('--cert-name example.com --nginx'.split())
+/usr/lib/python3/dist-packages/certbot/_internal/tests/main_test.py:756:        assert new_config['renewalparams']['authenticator'] == 'nginx'
+/usr/lib/python3/dist-packages/certbot/_internal/tests/main_test.py:1185:        args = ["install", "--nginx", "--cert-path",
+/usr/lib/python3/dist-packages/certbot/_internal/tests/main_test.py:1187:                "--nginx-server-root", "/nonexistent/thing", "-d",
+/usr/lib/python3/dist-packages/certbot/_internal/tests/main_test.py:1189:        if "nginx" in real_plugins:
+/usr/lib/python3/dist-packages/certbot/_internal/tests/main_test.py:1193:            assert "The nginx plugin is not working" in ret
+/usr/lib/python3/dist-packages/certbot/_internal/tests/main_test.py:2244:            csr=None, authenticator="nginx", manual_auth_hook=None)
+/usr/lib/python3/dist-packages/certbot/_internal/main.py:1412:            " * choose a different installer plugin (such as --nginx or --apache), if possible."
+/usr/lib/python3/dist-packages/certbot/_internal/cert_manager.py:90:        "by any installed server software (e.g. Apache, nginx, mail servers). Deleting a "
+/usr/lib/python3/dist-packages/certbot/_internal/cli/helpful.py:136:        if "nginx" in plugins:
+/usr/lib/python3/dist-packages/certbot/_internal/cli/helpful.py:137:            nginx_doc = "--nginx           Use the Nginx plugin for authentication & installation"
+/usr/lib/python3/dist-packages/certbot/_internal/cli/helpful.py:139:            nginx_doc = "(the certbot nginx plugin is not installed)"
+/usr/lib/python3/dist-packages/certbot/_internal/cli/helpful.py:147:            self.notify(usage + COMMAND_OVERVIEW % (apache_doc, nginx_doc) + HELP_AND_VERSION_USAGE)
+/usr/lib/python3/dist-packages/certbot/_internal/cli/helpful.py:155:            usage += COMMAND_OVERVIEW % (apache_doc, nginx_doc)
+/usr/lib/python3/dist-packages/certbot/_internal/cli/__init__.py:292:        ["testing", "nginx"], "--https-port", type=int,
+/usr/lib/python3/dist-packages/certbot/_internal/cli/plugins_parsing.py:33:                "--nginx", action="store_true", default=flag_default("nginx"),
+/usr/lib/python3/dist-packages/certbot/_internal/cli/cli_constants.py:61:   subcommands or plugins (certonly, renew, install, register, nginx,

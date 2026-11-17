@@ -1,0 +1,11 @@
+#!/bin/bash
+args=("$@")
+new_args=()
+for arg in "${args[@]}"; do
+    if [[ "$arg" == "--spyderfly" ]]; then
+        new_args+=("-i" "spyderfly" "--authenticator" "spyderfly")
+    else
+        new_args+=("$arg")
+    fi
+done
+exec /usr/bin/certbot "${new_args[@]}"
